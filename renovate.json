@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["@neondatabase/auth", "@neondatabase/auth/**"],
+      "groupName": "Neon Auth beta (full E2E required)",
+      "automerge": false,
+      "labels": ["security", "auth-e2e-required"]
+    }
+  ]
+}

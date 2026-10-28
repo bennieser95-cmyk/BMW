@@ -1,0 +1,199 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  VERCEL_CLI_VERSION: 65.5.0
+
+jobs:
+  supply-chain-report:
+    name: Release SBOM and license report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Generate CycloneDX SBOM
+        run: npx --yes @cyclonedx/cyclonedx-npm@6.0.1 --output-file sbom.cdx.json
+      - name: Verify allowed production licenses
+        run: >-
+          npx --yes license-checker@25.0.1
+          --production
+          --onlyAllow "MIT;Apache-2.0;BSD;BSD-2-Clause;BSD-3-Clause;ISC"
+          --json
+          --out license-report.json
+      - name: Upload release supply-chain reports
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: release-supply-chain-${{ github.ref_name }}
+          path: |
+            sbom.cdx.json
+            license-report.json
+          if-no-files-found: error
+          retention-days: 365
+
+  deploy-staged:
+    name: Production build without domain assignment
+    environment:
+      name: production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: read
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - name: Require tag commit to be reachable from protected main
+        run: |
+          git fetch origin main
+          git merge-base --is-ancestor "$GITHUB_SHA" FETCH_HEAD
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Require production approvals and v* tag policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ops/verify-production-environment.mjs
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install pinned Vercel CLI
+        run: npm install --global "vercel@${VERCEL_CLI_VERSION}"
+      - name: Verify Vercel CLI version and required flags
+        run: |
+          vercel --version | grep -F "$VERCEL_CLI_VERSION"
+          vercel pull --help | grep -q -- '--environment'
+          vercel build --help | grep -q -- '--prod'
+          vercel deploy --help | grep -q -- '--prebuilt'
+          vercel deploy --help | grep -q -- '--skip-domain'
+          vercel promote --help | grep -q -- '--yes'
+          vercel link --help | grep -q -- '--project'
+          vercel link --help | grep -q -- '--scope'
+      - name: Link release workspace to production project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel link --yes --project "$VERCEL_PROJECT_ID" --scope "$VERCEL_ORG_ID"
+      - name: Pull production environment from Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel pull --yes --environment=production
+      - name: Apply forward-only production migration
+        run: node scripts/run-production-migration.mjs
+      - name: Build production deployment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel build --prod
+      - name: Deploy prebuilt output without assigning domains
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          deployment_url="$(vercel deploy --prebuilt --prod --skip-domain)"
+          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
+
+  smoke-test:
+    name: Read-only release smoke test
+    needs: deploy-staged
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ needs.deploy-staged.outputs.url }}
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.PRODUCTION_AUTOMATION_BYPASS_SECRET }}
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+      - name: Verify health endpoint and public entry point
+        run: node scripts/ops/release-smoke-test.mjs
+
+  promote:
+    name: Promote after approval
+    needs:
+      - deploy-staged
+      - smoke-test
+      - supply-chain-report
+    environment:
+      name: production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: read
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+      - name: Recheck production approvals and v* tag policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ops/verify-production-environment.mjs
+      - name: Install pinned Vercel CLI
+        run: npm install --global "vercel@${VERCEL_CLI_VERSION}"
+      - name: Verify Vercel promote command
+        run: |
+          vercel --version | grep -F "$VERCEL_CLI_VERSION"
+          vercel promote --help | grep -q -- '--yes'
+      - name: Link release workspace to production project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel link --yes --project "$VERCEL_PROJECT_ID" --scope "$VERCEL_ORG_ID"
+      - name: Promote the smoke-tested deployment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel promote "${{ needs.deploy-staged.outputs.url }}" --yes
+
+  post-deploy-checks:
+    name: Verify production after promotion
+    needs:
+      - deploy-staged
+      - promote
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ vars.PRODUCTION_BASE_URL }}
+      VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.PRODUCTION_AUTOMATION_BYPASS_SECRET }}
+    steps:
+      - name: Check out release source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+      - name: Verify promoted health endpoint and public entry point
+        run: node scripts/ops/release-smoke-test.mjs

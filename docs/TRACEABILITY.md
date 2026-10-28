@@ -1,0 +1,69 @@
+# Anforderungsnachverfolgbarkeit
+
+Stand: Implementierung im vorhandenen Grundgerüst; Detailstatus bezieht sich auf Mock-/Stub-Verhalten.
+
+| FR-ID | Status | Umsetzung | Testnachweis |
+|---|---|---|---|
+| FR-NAV-001 | teilweise | `src/components/site-header.tsx`, `src/app/[locale]/layout.tsx` | `e2e/smoke.e2e.ts`; Mega-Menü-/mobile-A11y-Test offen |
+| FR-NAV-002 | teilweise | `src/components/site-header.tsx` | Kein gezielter Test; Filtergruppen/Intent fehlen |
+| FR-NAV-003 | teilweise | `src/components/site-header.tsx` | Kein Tastatur-/Fokusfallen-Test |
+| FR-NAV-004 | offen | — | — |
+| FR-NAV-005 | teilweise | `src/components/site-footer.tsx` | Kein Footer-Komponententest; Linkgruppen/Social-Links fehlen |
+| FR-NAV-006 | teilweise | `src/components/breadcrumbs.tsx`, Seiten unter `src/app/[locale]` | JSON-LD nicht auf allen Seiten; kein automatisierter Schema-Test |
+| FR-HOME-001 | teilweise | `src/app/[locale]/page.tsx`, `public/media/showroom-hero.svg` | Kein Visual-Test; redaktioneller CMS-Adapter fehlt |
+| FR-HOME-002 | offen | — | Hero verwendet nur ein eigenes statisches SVG, kein Video |
+| FR-HOME-003 | erfüllt (Mock) | `src/components/model-carousel.tsx`, `src/lib/models.queries.ts` | Modellanzahl im Mock = 8; E2E-Startseite |
+| FR-HOME-004 | teilweise | `src/app/[locale]/page.tsx` | Teaser statisch; CMS-Integrationstest fehlt |
+| FR-HOME-005 | offen | — | Newsletter-Double-Opt-in nicht implementiert |
+| FR-MOD-001 | erfüllt (Mock) | `src/app/[locale]/modelle/page.tsx`, `src/components/model-card.tsx` | `e2e/smoke.e2e.ts` |
+| FR-MOD-002 | erfüllt (Mock) | `src/components/model-filter.tsx` | `e2e/smoke.e2e.ts` (Antrieb/URL); Preis-/Leistung-/Karosserie-Tests offen |
+| FR-MOD-003 | teilweise | `src/components/model-filter.tsx` | URL-Zustand und Sortieroptionen vorhanden; Sortier-/Share-Test offen |
+| FR-MOD-004 | erfüllt | `src/components/model-filter.tsx` | `aria-live`; E2E-Ergebnisansage-Test offen |
+| FR-MOD-005 | offen | — | COULD, nicht umgesetzt |
+| FR-DET-001 | teilweise | `src/app/[locale]/modelle/[slug]/page.tsx` | Routen-/Daten-Test offen; Ausstattung ist Mocktext |
+| FR-DET-002 | teilweise | `src/components/media-gallery.tsx` | native Dialog-/Tastatur-/Wischverhalten implementiert; Komponenten-/A11y-Test offen |
+| FR-DET-003 | erfüllt (Mock) | `src/app/[locale]/modelle/[slug]/page.tsx` | Einheiten sichtbar; Datenassertion fehlt |
+| FR-DET-004 | teilweise | `src/components/sticky-subnav.tsx` | Scroll-Spy implementiert; Interaction-Test offen |
+| FR-DET-005 | erfüllt (Mock) | `src/app/[locale]/modelle/[slug]/page.tsx` | JSON-LD vorhanden; strukturierter-Daten-Test offen |
+| FR-CFG-001 | erfüllt (Mock) | `src/components/configurator-wizard.tsx` | `src/domain/configurator/configurator.engine.test.ts` |
+| FR-CFG-002 | teilweise | `src/components/configurator-wizard.tsx`, `src/app/api/v1/configurations/price/route.ts` | Preis wird lokal sofort angezeigt und serverseitig verifiziert; Bildvorschau bleibt synthetisch |
+| FR-CFG-003 | erfüllt (Mock) | `src/domain/configurator/configurator.engine.ts`, `src/components/configurator-wizard.tsx` | Domain-Regeltests; UI-Tooltip-Test offen |
+| FR-CFG-004 | teilweise | `src/domain/configurator/configurator.engine.ts`, `src/components/configurator-wizard.tsx` | Code-Aufbau/-Parsing und Property-Tests; E2E-Wiederherstellung offen |
+| FR-CFG-005 | teilweise | `src/components/configurator-wizard.tsx` | Browser-Druck und Probefahrt-Link; serverseitiger PDF-Export (COULD) fehlt |
+| FR-CFG-006 | erfüllt (Mock) | `src/components/configurator-wizard.tsx` | Zustand/URL/History implementiert; Playwright-Back-Test offen |
+| FR-DLR-001 | teilweise | `src/app/[locale]/haendler/page.tsx`, `src/components/dealer-results.tsx` | PLZ/Ort + Liste/Mock-Karte; Entfernungssortierung/Karten-SDK fehlen |
+| FR-DLR-002 | erfüllt (Mock) | `src/components/dealer-results.tsx` | Client-Servicefilter; gezielter Filtertest offen |
+| FR-DLR-003 | teilweise | `src/components/dealer-search-form.tsx` | Freigabe optional; Koordinaten werden nicht für die Ergebnissortierung verwendet |
+| FR-LEAD-001 | teilweise | `src/components/lead-form.tsx`, `src/features/leads/lead.schema.ts` | Dreischritt-Form vorhanden; Händler-/Modellauswahl ist Mock |
+| FR-LEAD-002 | erfüllt (Mock) | `src/features/leads/lead.schema.ts`, `src/features/leads/submit-lead.actions.ts` | Geteiltes Zod-Schema; gezielte Formular-Integrationstests offen |
+| FR-LEAD-003 | teilweise | `src/features/leads/submit-lead.actions.ts` | Honeypot/Consent; Rate-Limit fehlt, Persistenz wird absichtlich nicht simuliert |
+| FR-LEAD-004 | teilweise | `src/app/[locale]/bestaetigung/page.tsx`, `src/components/lead-form.tsx` | Inline-Bestätigung vorhanden; keine Lead-Weiterleitung/E-Mail |
+| FR-LEAD-005 | offen | — | Auth-Sitzung nicht verfügbar |
+| FR-ACC-001 | offen | `src/app/(auth)/auth/sign-up/page.tsx` | Neon Auth nicht konfiguriert |
+| FR-ACC-002 | offen | `src/app/(auth)/auth/sign-in/page.tsx` | Neon Auth/Sitzungen nicht konfiguriert |
+| FR-ACC-003 | offen | — | Neon Auth nicht konfiguriert |
+| FR-ACC-004 | offen | — | Neon Auth nicht konfiguriert |
+| FR-ACC-005 | offen | — | Speichern/Verwalten nutzergebundener Konfigurationen setzt die fehlende Auth-/Backend-Integration voraus |
+| FR-ACC-006 | teilweise | `src/app/[locale]/konto/page.tsx` | Konto-Route leitet zur Anmeldungs-Platzhalterseite weiter; echte Authentifizierung/Rückkehr nach Login fehlt |
+| FR-ACC-007 | offen | — | Datenexport/Kontolöschung benötigen Agent-3-Backend |
+| FR-ACC-008 | erfüllt | Modell-, Konfigurator-, Händler- und Lead-Routen | Keine Auth-Abhängigkeit in Marketing-Routen |
+| FR-ACC-009 | offen | — | COULD, nicht umgesetzt |
+| FR-ACC-010 | offen | — | Neon Auth nicht konfiguriert; COULD |
+| FR-GEN-001 | teilweise | `src/components/consent-banner.tsx`, `src/lib/track.ts` | Ablehnen gleichwertig, 183 Tage; E2E-Tracking-Test ausstehend |
+| FR-GEN-002 | teilweise | `src/messages/de.json`, `src/messages/en.json`, `src/lib/i18n/` | Locale-Routen/Sprachwahl/hreflang vorhanden; alle UI-Texte noch nicht katalogisiert |
+| FR-GEN-003 | teilweise | `src/app/[locale]/suche/page.tsx`, `src/components/search-box.tsx` | Debounce 250 ms; Suchen nur über Mock-Modelle |
+| FR-GEN-004 | offen | — | COULD, nicht umgesetzt |
+| FR-GEN-005 | teilweise | `src/app/[locale]/not-found.tsx`, `src/app/[locale]/error.tsx`, `src/app/[locale]/offline/page.tsx` | Statische Fehlerseiten; lokalisierter Suchzugang/Test offen |
+| FR-GEN-006 | teilweise | `src/app/api/revalidate/route.ts`, `src/infrastructure/cms/mock-cms.adapter.ts` | HMAC-Route vorhanden; produktiver CMS-Webhook/Cache-Tag-Anschluss fehlt |
+
+## Validierung
+
+- Unit-/Property-Tests: Konfigurator-Domain (`fast-check`); Domain-Coverage-Schwelle ist konfiguriert, Coverage-Ausführung muss im CI bestätigt werden.
+- `npm run typecheck`: zuletzt vor dem Konto-Redirect erfolgreich. Aktuell nicht verifizierbar:
+  `node_modules` ist unvollständig; globales TypeScript 6 meldet zunächst die `baseUrl`-Deprecation.
+  Mit `--ignoreDeprecations 6.0` folgen zahlreiche fehlende Module/Typen.
+- `npm test`: zuletzt erfolgreich (7 Tests), vor der Ergänzung des Konto-E2E-Szenarios.
+- `npm run lint`: noch nicht erfolgreich; zahlreiche Import-/Formatierungsfehler in parallel integrierten Dateien.
+- `npm ci` scheitert aktuell mit `ENOTEMPTY` beim Entfernen eines Verzeichnisses unter `node_modules`.
+  Build, E2E (einschließlich Konto-Redirect), Lighthouse/Bundle-Budgets und WCAG-Audit: nicht erfolgreich nachgewiesen.
+- Performance-Messwerte: nicht erhoben; LCP/INP/CLS und JS-Gzip-Budget daher offen.

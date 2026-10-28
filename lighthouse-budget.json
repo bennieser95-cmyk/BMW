@@ -1,0 +1,8 @@
+[
+  {
+    "resourceSizes": [
+      { "resourceType": "script", "budget": 170 },
+      { "resourceType": "image", "budget": 200 }
+    ]
+  }
+]

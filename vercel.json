@@ -1,0 +1,9 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build:vercel",
+  "regions": ["fra1"],
+  "git": { "deploymentEnabled": { "main": false } },
+  "crons": [{ "path": "/api/cron/purge-leads", "schedule": "0 3 * * *" }]
+}

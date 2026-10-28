@@ -1,0 +1,19 @@
+{
+  "sign-in": "Anmelden",
+  "sign-up": "Konto erstellen",
+  "forgot-password": "Passwort vergessen",
+  "reset-password": "Passwort zurücksetzen",
+  "verify-email": "E-Mail-Adresse bestätigen",
+  "email": "E-Mail-Adresse",
+  "password": "Passwort",
+  "name": "Name",
+  "passwordHint": "8 bis 128 Zeichen. Verwende ein langes, einzigartiges Passwort.",
+  "submit": "Fortfahren",
+  "pending": "Wird verarbeitet",
+  "success": "Falls die Adresse registriert ist, erhältst du eine E-Mail mit den nächsten Schritten.",
+  "verification": "Bitte bestätige deine E-Mail-Adresse über den zugesandten Link.",
+  "error": "Die Anfrage konnte nicht abgeschlossen werden. Bitte prüfe deine Angaben und versuche es erneut.",
+  "invalid": "Bitte prüfe die Eingaben. Ein gültiger, nicht abgelaufener Link ist zum Zurücksetzen erforderlich.",
+  "continue": "Zum Konto",
+  "home": "Zur Startseite"
+}
