@@ -1,0 +1,281 @@
+/*
+ * Design tokens – single source of truth for visual values (BAV-UX-007, chapter 3).
+ *
+ * `@theme static` registers the tokens as Tailwind theme variables AND always emits them as CSS
+ * custom properties, so the dark-mode overrides below can re-declare them at runtime.
+ * Every default Tailwind namespace that the brand does not use is reset with `initial`, which
+ * makes off-scale utilities (e.g. `p-5`, `bg-red-500`, `text-7xl`) impossible to generate.
+ *
+ * Contrast values are documented in docs/design-system/contrast.md and can be re-checked with
+ * `npm run tokens:contrast`.
+ */
+
+@theme static {
+  /* ---------- Colours (semantic, light) ---------- */
+  --color-*: initial;
+  --color-bg: #ffffff;
+  --color-surface: #f4f5f7;
+  --color-text: #16171a;
+  --color-text-muted: #5a5d66;
+  --color-brand-primary: #1c69d4;
+  --color-brand-primary-hover: #1555b0;
+  --color-brand-accent: #e22718;
+  --color-border: #d8dadf;
+  /* Not in BAV-UX-007: form-control outlines need 3:1 against the background (WCAG 1.4.11). */
+  --color-border-strong: #7a7e89;
+  --color-focus: #1c69d4;
+  --color-success: #1e7b3a;
+  --color-warning: #a15c00;
+  --color-danger: #b3261e;
+  /* Foreground on brand-filled surfaces; flips to dark in dark mode to keep >= 4.5:1. */
+  --color-on-brand: #ffffff;
+  /* Foreground on photos/video; always paired with the hero scrim gradient. */
+  --color-on-media: #ffffff;
+  --color-overlay: rgb(14 14 16 / 0.72);
+
+  /* ---------- Typography ---------- */
+  --font-*: initial;
+  --font-sans: var(--font-inter), system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.5;
+  /* Fluid sizes: grow linearly between the xs (360 px) and xl (1440 px) breakpoints. */
+  --text-xl: clamp(1.125rem, 1.0833rem + 0.1852vw, 1.25rem);
+  --text-xl--line-height: 1.5;
+  --text-2xl: clamp(1.25rem, 1.1667rem + 0.3704vw, 1.5rem);
+  --text-2xl--line-height: 1.15;
+  --text-3xl: clamp(1.5rem, 1.3333rem + 0.7407vw, 2rem);
+  --text-3xl--line-height: 1.15;
+  --text-4xl: clamp(1.75rem, 1.5rem + 1.1111vw, 2.5rem);
+  --text-4xl--line-height: 1.15;
+  --text-5xl: clamp(2.25rem, 1.8333rem + 1.8519vw, 3.5rem);
+  --text-5xl--line-height: 1.15;
+
+  --leading-*: initial;
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  --font-weight-*: initial;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* ---------- Spacing (4 px grid; key = px / 4) ---------- */
+  --spacing-*: initial;
+  --spacing-0: 0px;
+  --spacing-px: 1px;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  /* Component sizes on the same grid: touch target, mobile and desktop header height. */
+  --spacing-touch: 2.75rem;
+  --spacing-header-sm: 3.5rem;
+  --spacing-header: 4.5rem;
+
+  /* ---------- Radii (brand is rather angular) ---------- */
+  --radius-*: initial;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* ---------- Shadows (replaced by a hairline border in dark mode) ---------- */
+  --shadow-*: initial;
+  --shadow-1: 0 1px 2px rgb(22 23 26 / 0.08);
+  --shadow-2: 0 4px 12px rgb(22 23 26 / 0.1);
+  --shadow-3: 0 16px 40px rgb(22 23 26 / 0.16);
+
+  /* ---------- Motion ---------- */
+  --ease-*: initial;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---------- Breakpoints (BAV-UX-007, 2.1); xs is the mobile-first base ---------- */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
+  --breakpoint-2xl: 120rem;
+
+  --container-*: initial;
+  --container-prose: 65ch;
+  --container-content: 100rem;
+
+  /* ---------- Animations (transform/opacity only) ---------- */
+  --animate-spin: spin 1s linear infinite;
+  --animate-pulse: pulse 2s var(--ease-standard) infinite;
+  --animate-fade-in: fade-in var(--motion-base) var(--ease-standard);
+  --animate-slide-in-end: slide-in-end var(--motion-slow) var(--ease-standard);
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes slide-in-end {
+    from {
+      opacity: 0;
+      transform: translateX(8%);
+    }
+  }
+}
+
+/* Tokens without a Tailwind namespace; consumed via `duration-(--motion-base)`, `z-(--z-header)`. */
+:root {
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-slow: 400ms;
+  --hover-intent-delay: var(--motion-fast);
+
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  --header-height: 3.5rem;
+  --header-scroll-threshold: 80px;
+
+  /* Layout grid (BAV-UX-007, 2.1). xs: 4 columns, 16 px margin, 16 px gutter. */
+  --layout-columns: 4;
+  --layout-margin: 1rem;
+  --layout-gutter: 1rem;
+  --layout-max-width: 1600px;
+
+  /* Royalty-free placeholder media; own compositions, no third-party assets. */
+  --gradient-media-1: linear-gradient(135deg, #293848 0%, #8396a4 100%);
+  --gradient-media-2: linear-gradient(135deg, #34443d 0%, #9aa78e 100%);
+  --gradient-media-3: linear-gradient(135deg, #3c3031 0%, #a68d88 100%);
+  --gradient-media-4: linear-gradient(135deg, #383a40 0%, #92949a 100%);
+  /*
+   * Darkening scrim that keeps on-media text >= 4.5:1 even over a pure white photo, as long as
+   * the text sits in the lower half (stop at 50 %). Checked by `npm run tokens:contrast`.
+   */
+  --gradient-scrim: linear-gradient(
+    to top,
+    rgb(14 14 16 / 0.85) 0%,
+    rgb(14 14 16 / 0.7) 50%,
+    rgb(14 14 16 / 0.2) 100%
+  );
+  /*
+   * Scrim behind the transparent header over media: the full header band stays at the 0.7 stop
+   * (same worst case as above), then fades out below the header.
+   */
+  --gradient-header-scrim: linear-gradient(
+    to bottom,
+    rgb(14 14 16 / 0.7) 0%,
+    rgb(14 14 16 / 0.7) 50%,
+    rgb(14 14 16 / 0) 100%
+  );
+  --gradient-map: repeating-linear-gradient(
+    30deg,
+    var(--color-surface) 0 40px,
+    var(--color-border) 40px 42px
+  );
+
+  color-scheme: light;
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --layout-margin: 1.5rem;
+  }
+}
+@media (min-width: 48rem) {
+  :root {
+    --layout-columns: 8;
+    --layout-margin: 2rem;
+    --layout-gutter: 1.5rem;
+  }
+}
+@media (min-width: 64rem) {
+  :root {
+    --layout-columns: 12;
+    --layout-margin: 3rem;
+    --header-height: 4.5rem;
+  }
+}
+@media (min-width: 90rem) {
+  :root {
+    --layout-margin: 4rem;
+    --layout-gutter: 2rem;
+  }
+}
+
+/*
+ * Dark palette. Declared twice on purpose: once for the OS preference (unless the user forced
+ * light) and once for an explicit `data-theme="dark"` choice, as specified in BAV-UX-007 3.2.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-bg: #0e0e10;
+    --color-surface: #17181b;
+    --color-text: #f2f3f5;
+    --color-text-muted: #a4a8b3;
+    --color-brand-primary: #4c8df0;
+    --color-brand-primary-hover: #7fb0ff;
+    --color-brand-accent: #ff5a4c;
+    --color-border: #2c2e34;
+    --color-border-strong: #7d818c;
+    --color-focus: #7fb0ff;
+    --color-success: #4cc27a;
+    --color-warning: #f0a43a;
+    --color-danger: #ff6b60;
+    --color-on-brand: #0e0e10;
+    --color-overlay: rgb(0 0 0 / 0.8);
+    --shadow-1: 0 0 0 1px var(--color-border);
+    --shadow-2: 0 0 0 1px var(--color-border);
+    --shadow-3: 0 0 0 1px var(--color-border);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #0e0e10;
+  --color-surface: #17181b;
+  --color-text: #f2f3f5;
+  --color-text-muted: #a4a8b3;
+  --color-brand-primary: #4c8df0;
+  --color-brand-primary-hover: #7fb0ff;
+  --color-brand-accent: #ff5a4c;
+  --color-border: #2c2e34;
+  --color-border-strong: #7d818c;
+  --color-focus: #7fb0ff;
+  --color-success: #4cc27a;
+  --color-warning: #f0a43a;
+  --color-danger: #ff6b60;
+  --color-on-brand: #0e0e10;
+  --color-overlay: rgb(0 0 0 / 0.8);
+  --shadow-1: 0 0 0 1px var(--color-border);
+  --shadow-2: 0 0 0 1px var(--color-border);
+  --shadow-3: 0 0 0 1px var(--color-border);
+}

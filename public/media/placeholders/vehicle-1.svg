@@ -1,0 +1,19 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="t">
+  <title id="t">Synthetische Fahrzeugillustration (Platzhalter)</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#293848"/>
+      <stop offset="1" stop-color="#8396a4"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <ellipse cx="800" cy="700" rx="620" ry="40" fill="#000" opacity="0.25"/>
+  <path d="M260 640c0-60 30-100 110-118l170-36c60-60 150-120 280-128 150-8 260 40 360 120l150 30c80 18 110 60 110 132v20H260z" fill="url(#body)"/>
+  <path d="M600 486c60-50 130-88 220-94 100-6 180 26 250 80z" fill="#000" opacity="0.35"/>
+  <circle cx="500" cy="660" r="78" fill="#16171a"/><circle cx="500" cy="660" r="40" fill="#5a5d66"/>
+  <circle cx="1140" cy="660" r="78" fill="#16171a"/><circle cx="1140" cy="660" r="40" fill="#5a5d66"/>
+</svg>

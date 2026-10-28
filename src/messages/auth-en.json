@@ -1,0 +1,20 @@
+{
+  "sign-in": "Sign in",
+  "sign-up": "Create account",
+  "forgot-password": "Forgot password",
+  "reset-password": "Reset password",
+  "verify-email": "Verify email address",
+  "email": "Email address",
+  "password": "Password",
+  "name": "Name",
+  "passwordHint": "8 to 128 characters. Use a long, unique password.",
+  "submit": "Continue",
+  "pending": "Processing",
+  "success": "If the address is registered, you will receive an email with the next steps.",
+  "verification": "Enter the six-digit verification code from your email.",
+  "otp": "Verification code",
+  "error": "The request could not be completed. Check your details and try again.",
+  "invalid": "Please check your details. A valid, unexpired link is required to reset your password.",
+  "continue": "Go to account",
+  "home": "Back to homepage"
+}
