@@ -1,17 +1,105 @@
 {
   "models": [
-    { "slug": "aurelia", "name": "Aurelia One", "bodyType": "sedan", "fuelType": "electric", "basePriceCents": 4290000, "powerKw": 170, "rangeKm": 480 },
-    { "slug": "aurelia-tour", "name": "Aurelia Tour", "bodyType": "touring", "fuelType": "hybrid", "basePriceCents": 4680000, "powerKw": 180, "rangeKm": 72 },
-    { "slug": "valora-x", "name": "Valora X", "bodyType": "suv", "fuelType": "electric", "basePriceCents": 5190000, "powerKw": 250, "rangeKm": 560 },
-    { "slug": "valora-sport", "name": "Valora Sport", "bodyType": "coupe", "fuelType": "petrol", "basePriceCents": 5590000, "powerKw": 230, "rangeKm": 0 },
-    { "slug": "montara", "name": "Montara", "bodyType": "suv", "fuelType": "diesel", "basePriceCents": 4850000, "powerKw": 150, "rangeKm": 0 },
-    { "slug": "solenne", "name": "Solenne", "bodyType": "sedan", "fuelType": "hybrid", "basePriceCents": 4980000, "powerKw": 215, "rangeKm": 85 },
-    { "slug": "novara-gt", "name": "Novara GT", "bodyType": "coupe", "fuelType": "electric", "basePriceCents": 6290000, "powerKw": 300, "rangeKm": 610 },
-    { "slug": "terranova", "name": "Terranova", "bodyType": "suv", "fuelType": "petrol", "basePriceCents": 5790000, "powerKw": 195, "rangeKm": 0 }
+    {
+      "slug": "aurelia",
+      "name": "Aurelia One",
+      "bodyType": "sedan",
+      "fuelType": "electric",
+      "basePriceCents": 4290000,
+      "powerKw": 170,
+      "rangeKm": 480
+    },
+    {
+      "slug": "aurelia-tour",
+      "name": "Aurelia Tour",
+      "bodyType": "touring",
+      "fuelType": "hybrid",
+      "basePriceCents": 4680000,
+      "powerKw": 180,
+      "rangeKm": 72
+    },
+    {
+      "slug": "valora-x",
+      "name": "Valora X",
+      "bodyType": "suv",
+      "fuelType": "electric",
+      "basePriceCents": 5190000,
+      "powerKw": 250,
+      "rangeKm": 560
+    },
+    {
+      "slug": "valora-sport",
+      "name": "Valora Sport",
+      "bodyType": "coupe",
+      "fuelType": "petrol",
+      "basePriceCents": 5590000,
+      "powerKw": 230,
+      "rangeKm": 0
+    },
+    {
+      "slug": "montara",
+      "name": "Montara",
+      "bodyType": "suv",
+      "fuelType": "diesel",
+      "basePriceCents": 4850000,
+      "powerKw": 150,
+      "rangeKm": 0
+    },
+    {
+      "slug": "solenne",
+      "name": "Solenne",
+      "bodyType": "sedan",
+      "fuelType": "hybrid",
+      "basePriceCents": 4980000,
+      "powerKw": 215,
+      "rangeKm": 85
+    },
+    {
+      "slug": "novara-gt",
+      "name": "Novara GT",
+      "bodyType": "coupe",
+      "fuelType": "electric",
+      "basePriceCents": 6290000,
+      "powerKw": 300,
+      "rangeKm": 610
+    },
+    {
+      "slug": "terranova",
+      "name": "Terranova",
+      "bodyType": "suv",
+      "fuelType": "petrol",
+      "basePriceCents": 5790000,
+      "powerKw": 195,
+      "rangeKm": 0
+    }
   ],
   "dealers": [
-    { "id": "dealer-munich", "name": "BAVARIA Studio München (Beispiel)", "city": "München", "postalCode": "80331", "address": "Isarforum 12", "geo": { "lat": 48.137, "lon": 11.575 }, "services": ["sales", "workshop", "charging"] },
-    { "id": "dealer-hamburg", "name": "BAVARIA Studio Hamburg (Beispiel)", "city": "Hamburg", "postalCode": "20095", "address": "Hafenallee 8", "geo": { "lat": 53.55, "lon": 10.001 }, "services": ["sales", "charging"] },
-    { "id": "dealer-berlin", "name": "BAVARIA Studio Berlin (Beispiel)", "city": "Berlin", "postalCode": "10115", "address": "Lichtbogen 4", "geo": { "lat": 52.532, "lon": 13.384 }, "services": ["sales", "workshop"] }
+    {
+      "id": "dealer-munich",
+      "name": "BAVARIA Studio München (Beispiel)",
+      "city": "München",
+      "postalCode": "80331",
+      "address": "Isarforum 12",
+      "geo": { "lat": 48.137, "lon": 11.575 },
+      "services": ["sales", "workshop", "charging"]
+    },
+    {
+      "id": "dealer-hamburg",
+      "name": "BAVARIA Studio Hamburg (Beispiel)",
+      "city": "Hamburg",
+      "postalCode": "20095",
+      "address": "Hafenallee 8",
+      "geo": { "lat": 53.55, "lon": 10.001 },
+      "services": ["sales", "charging"]
+    },
+    {
+      "id": "dealer-berlin",
+      "name": "BAVARIA Studio Berlin (Beispiel)",
+      "city": "Berlin",
+      "postalCode": "10115",
+      "address": "Lichtbogen 4",
+      "geo": { "lat": 52.532, "lon": 13.384 },
+      "services": ["sales", "workshop"]
+    }
   ]
 }

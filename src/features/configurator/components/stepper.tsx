@@ -42,12 +42,13 @@ export function ConfiguratorStepper({
       <ol className="flex gap-1 overflow-x-auto">
         {steps.map((step, index) => {
           const isCurrent = index === currentStep
-          const isReachable = onStepSelect !== undefined && (index <= currentStep || step.complete === true)
+          const isReachable =
+            onStepSelect !== undefined && (index <= currentStep || step.complete === true)
           const content = (
             <>
               <span
                 className={cn(
-                  'flex size-6 shrink-0 items-center justify-center rounded-pill border text-xs tabular-nums',
+                  'rounded-pill flex size-6 shrink-0 items-center justify-center border text-xs tabular-nums',
                   isCurrent && 'border-text bg-text text-bg',
                   !isCurrent && step.complete && 'border-success text-success',
                   !isCurrent && !step.complete && 'border-border-strong text-text-muted',
@@ -55,7 +56,12 @@ export function ConfiguratorStepper({
               >
                 {step.complete && !isCurrent ? <Icon name="check" size="sm" /> : index + 1}
               </span>
-              <span className={cn('whitespace-nowrap', isCurrent ? 'font-medium text-text' : 'text-text-muted')}>
+              <span
+                className={cn(
+                  'whitespace-nowrap',
+                  isCurrent ? 'text-text font-medium' : 'text-text-muted',
+                )}
+              >
                 {step.label}
               </span>
               {step.complete ? <span className="sr-only">({labels.completed})</span> : null}
@@ -72,14 +78,14 @@ export function ConfiguratorStepper({
                   type="button"
                   aria-current={isCurrent ? 'step' : undefined}
                   onClick={() => onStepSelect(index)}
-                  className="flex min-h-touch w-full items-center gap-2 px-2 text-sm hover:bg-surface"
+                  className="min-h-touch hover:bg-surface flex w-full items-center gap-2 px-2 text-sm"
                 >
                   {content}
                 </button>
               ) : (
                 <span
                   aria-current={isCurrent ? 'step' : undefined}
-                  className="flex min-h-touch items-center gap-2 px-2 text-sm"
+                  className="min-h-touch flex items-center gap-2 px-2 text-sm"
                 >
                   {content}
                 </span>

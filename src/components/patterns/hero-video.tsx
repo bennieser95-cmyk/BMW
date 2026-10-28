@@ -55,14 +55,14 @@ export function HeroVideo({ src, labels }: HeroVideoProps) {
         loop
         playsInline
         aria-hidden="true"
-        className="absolute inset-0 size-full object-cover motion-safe:animate-fade-in"
+        className="motion-safe:animate-fade-in absolute inset-0 size-full object-cover"
       />
       <Button
         variant="secondary"
         size="icon"
         onClick={toggle}
         aria-label={playing ? labels.pause : labels.play}
-        className="absolute end-4 bottom-4 z-1 border-on-media text-on-media hover:bg-overlay"
+        className="border-on-media text-on-media hover:bg-overlay absolute end-4 bottom-4 z-1"
       >
         <Icon name={playing ? 'pause' : 'play'} />
       </Button>

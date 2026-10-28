@@ -20,10 +20,23 @@ export function DealerSearchForm({ locale, query }: { locale: string; query: str
     )
   }
 
-  return <form action={`/${locale}/haendler`} className="dealer-search page-container" role="search">
-    <label className="field">{messages.dealers.postalCode}<input autoComplete="postal-code" defaultValue={query} name="q" /></label>
-    <button className="button button-primary" type="submit">{messages.dealers.search}</button>
-    <button className="button button-secondary" onClick={useLocation} type="button">{messages.dealers.location}</button>
-    {locationMessage && <p aria-live="polite" role="status">{locationMessage}</p>}
-  </form>
+  return (
+    <form action={`/${locale}/haendler`} className="dealer-search page-container" role="search">
+      <label className="field">
+        {messages.dealers.postalCode}
+        <input autoComplete="postal-code" defaultValue={query} name="q" />
+      </label>
+      <button className="button button-primary" type="submit">
+        {messages.dealers.search}
+      </button>
+      <button className="button button-secondary" onClick={useLocation} type="button">
+        {messages.dealers.location}
+      </button>
+      {locationMessage && (
+        <p aria-live="polite" role="status">
+          {locationMessage}
+        </p>
+      )}
+    </form>
+  )
 }

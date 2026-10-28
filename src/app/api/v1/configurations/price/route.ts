@@ -4,5 +4,7 @@ import { catalog } from '@/lib/backend/services'
 
 export const runtime = 'nodejs'
 export function POST(request: Request): Promise<Response> {
-  return handleRoute(request, async () => json(await catalog.price(await readJson(request, priceRequestSchema))))
+  return handleRoute(request, async () =>
+    json(await catalog.price(await readJson(request, priceRequestSchema))),
+  )
 }

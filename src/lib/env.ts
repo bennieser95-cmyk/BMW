@@ -45,7 +45,13 @@ if (!parsedEnvironment.success) {
 export const env = parsedEnvironment.data
 
 export function requireEnv(
-  name: 'DATABASE_URL' | 'NEON_AUTH_BASE_URL' | 'NEON_AUTH_COOKIE_SECRET' | 'REVALIDATE_SECRET' | 'CRON_SECRET' | 'RATE_LIMIT_SECRET',
+  name:
+    | 'DATABASE_URL'
+    | 'NEON_AUTH_BASE_URL'
+    | 'NEON_AUTH_COOKIE_SECRET'
+    | 'REVALIDATE_SECRET'
+    | 'CRON_SECRET'
+    | 'RATE_LIMIT_SECRET',
 ): string {
   const value = env[name]
   if (!value) throw new Error(`Missing server configuration: ${name}`)

@@ -134,7 +134,7 @@ export function MegaMenu({ items, label, onOpenChange, onMedia = false }: MegaMe
                   name="chevron-down"
                   size="sm"
                   className={cn(
-                    'transition-transform duration-(--motion-fast) ease-standard',
+                    'ease-standard transition-transform duration-(--motion-fast)',
                     isOpen && 'rotate-180',
                   )}
                 />
@@ -146,13 +146,13 @@ export function MegaMenu({ items, label, onOpenChange, onMedia = false }: MegaMe
                 }}
                 hidden={!isOpen}
                 onPointerEnter={cancel}
-                className="absolute inset-x-0 top-full border-t border-border bg-bg text-text shadow-2 motion-safe:animate-fade-in"
+                className="border-border bg-bg text-text shadow-2 motion-safe:animate-fade-in absolute inset-x-0 top-full border-t"
               >
                 <div className="layout-container grid grid-cols-4 gap-8 py-12">
                   {item.groups.map((group, index) => (
                     <div key={group.title ?? index} className="flex flex-col gap-3">
                       {group.title ? (
-                        <p className="text-xs font-medium tracking-wide text-text-muted uppercase">
+                        <p className="text-text-muted text-xs font-medium tracking-wide uppercase">
                           {group.title}
                         </p>
                       ) : null}
@@ -162,7 +162,7 @@ export function MegaMenu({ items, label, onOpenChange, onMedia = false }: MegaMe
                             <NextLink
                               href={link.href}
                               onClick={() => setOpen(null)}
-                              className="inline-flex min-h-touch items-center text-lg hover:underline"
+                              className="min-h-touch inline-flex items-center text-lg hover:underline"
                             >
                               {link.label}
                             </NextLink>

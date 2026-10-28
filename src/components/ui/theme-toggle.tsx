@@ -54,7 +54,14 @@ export function ThemeToggle({ label }: ThemeToggleProps) {
   }
 
   return (
-    <Button variant="ghost" size="icon" aria-label={label} aria-pressed={dark} onClick={toggle} className="text-text">
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label={label}
+      aria-pressed={dark}
+      onClick={toggle}
+      className="text-text"
+    >
       <Icon name={dark ? 'sun' : 'moon'} />
     </Button>
   )

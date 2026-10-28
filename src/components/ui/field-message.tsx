@@ -22,7 +22,7 @@ export function FieldMessage({ id, tone, children }: FieldMessageProps) {
       id={id}
       className={cn(
         'flex items-start gap-1 text-sm',
-        isError ? 'font-medium text-danger' : 'text-text-muted',
+        isError ? 'text-danger font-medium' : 'text-text-muted',
       )}
     >
       {isError ? <Icon name="alert-circle" size="sm" className="mt-px" /> : null}

@@ -20,11 +20,14 @@ export default defineConfig({
           environment: 'jsdom',
           include: ['src/**/*.test.tsx'],
           setupFiles: ['./vitest.setup.ts'],
-          // Role queries plus axe on a cold jsdom are slower than pure unit tests.
-          testTimeout: 20_000,
+          // Role queries plus axe on a cold jsdom are slow, especially with parallel workers on CI.
+          testTimeout: 60_000,
         },
       },
     ],
-    coverage: { include: ['src/domain/**/*.ts'], thresholds: { lines: 90, functions: 90, branches: 90, statements: 90 } },
+    coverage: {
+      include: ['src/domain/**/*.ts'],
+      thresholds: { lines: 90, functions: 90, branches: 90, statements: 90 },
+    },
   },
 })

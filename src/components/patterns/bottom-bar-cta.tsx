@@ -18,7 +18,7 @@ export function BottomBarCta({ action, info, className }: BottomBarCtaProps) {
   return (
     <div
       className={cn(
-        'fixed inset-x-0 bottom-0 z-(--z-header) border-t border-border bg-bg pb-[env(safe-area-inset-bottom)] lg:hidden',
+        'border-border bg-bg fixed inset-x-0 bottom-0 z-(--z-header) border-t pb-[env(safe-area-inset-bottom)] lg:hidden',
         className,
       )}
     >

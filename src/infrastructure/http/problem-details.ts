@@ -49,10 +49,12 @@ export function createProblemResponseFromRequest(
   title: string,
   status: number,
 ): Response {
-  return createProblemResponse(buildProblemDetails({
-    title,
-    status,
-    instance: new URL(request.url).pathname,
-    traceId: randomUUID(),
-  }))
+  return createProblemResponse(
+    buildProblemDetails({
+      title,
+      status,
+      instance: new URL(request.url).pathname,
+      traceId: randomUUID(),
+    }),
+  )
 }

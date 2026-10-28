@@ -9,7 +9,9 @@ import { Select } from './select'
 
 describe('Input', () => {
   it('should link label, hint and error when an error is given', () => {
-    render(<Input label="E-Mail-Adresse" hint="Wir antworten per E-Mail." error="Ungültig" required />)
+    render(
+      <Input label="E-Mail-Adresse" hint="Wir antworten per E-Mail." error="Ungültig" required />,
+    )
     const input = screen.getByRole('textbox', { name: /E-Mail-Adresse/ })
     expect(input).toBeRequired()
     expect(input).toHaveAttribute('aria-invalid', 'true')
@@ -47,7 +49,12 @@ describe('Select', () => {
 
   it('should have no axe violations when rendered with placeholder and error', async () => {
     const { container } = render(
-      <Select label="Modell" placeholder="Bitte wählen" error="Pflichtfeld" options={[{ value: 'a', label: 'A' }]} />,
+      <Select
+        label="Modell"
+        placeholder="Bitte wählen"
+        error="Pflichtfeld"
+        options={[{ value: 'a', label: 'A' }]}
+      />,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

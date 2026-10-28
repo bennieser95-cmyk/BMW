@@ -47,7 +47,7 @@ export function ModelCarousel({
   autoplayIntervalMs = 6000,
   className,
 }: ModelCarouselProps) {
-  const trackRef = useRef<HTMLUListElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
   const [playing, setPlaying] = useState(autoplay)
   const [interacting, setInteracting] = useState(false)
@@ -59,7 +59,10 @@ export function ModelCarousel({
       const track = trackRef.current
       const target = track?.children[(index + total) % total] as HTMLElement | undefined
       if (!track || !target) return
-      track.scrollTo({ left: target.offsetLeft - track.offsetLeft, behavior: reducedMotion ? 'auto' : 'smooth' })
+      track.scrollTo({
+        left: target.offsetLeft - track.offsetLeft,
+        behavior: reducedMotion ? 'auto' : 'smooth',
+      })
       setCurrent((index + total) % total)
     },
     [reducedMotion, total],
@@ -106,16 +109,17 @@ export function ModelCarousel({
         if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false)
       }}
     >
-      <ul
+      {/* Slides are role=group (APG), which a <li> may not carry, hence divs instead of a list. */}
+      <div
         ref={trackRef}
         // Scrollable region must be keyboard reachable (axe scrollable-region-focusable).
         tabIndex={0}
         onKeyDown={onKeyDown}
         aria-live={isAutoplaying ? 'off' : 'polite'}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none]"
+        className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto scroll-smooth pb-2"
       >
         {items.map((item, index) => (
-          <li
+          <div
             key={item.id}
             role="group"
             aria-roledescription="slide"
@@ -123,9 +127,9 @@ export function ModelCarousel({
             className="shrink-0 basis-full snap-start md:basis-1/2 lg:basis-1/3"
           >
             {item.content}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
       <div className="flex items-center justify-between gap-4">
         <ol className="flex flex-wrap items-center">
           {items.map((item, index) => (
@@ -135,12 +139,14 @@ export function ModelCarousel({
                 aria-label={formatLabel(labels.goTo, { index: index + 1 })}
                 aria-current={index === current ? 'true' : undefined}
                 onClick={() => goTo(index)}
-                className="group flex size-touch items-center justify-center"
+                className="group size-touch flex items-center justify-center"
               >
                 <span
                   className={cn(
-                    'block h-1 w-6 rounded-pill transition-transform duration-(--motion-fast) ease-standard',
-                    index === current ? 'scale-x-150 bg-text' : 'bg-border-strong group-hover:bg-text-muted',
+                    'rounded-pill ease-standard block h-1 w-6 transition-transform duration-(--motion-fast)',
+                    index === current
+                      ? 'bg-text scale-x-150'
+                      : 'bg-border-strong group-hover:bg-text-muted',
                   )}
                 />
               </button>
@@ -158,10 +164,20 @@ export function ModelCarousel({
               <Icon name={playing ? 'pause' : 'play'} />
             </Button>
           ) : null}
-          <Button variant="secondary" size="icon" aria-label={labels.previous} onClick={() => goTo(current - 1)}>
+          <Button
+            variant="secondary"
+            size="icon"
+            aria-label={labels.previous}
+            onClick={() => goTo(current - 1)}
+          >
             <Icon name="chevron-left" className="rtl:rotate-180" />
           </Button>
-          <Button variant="secondary" size="icon" aria-label={labels.next} onClick={() => goTo(current + 1)}>
+          <Button
+            variant="secondary"
+            size="icon"
+            aria-label={labels.next}
+            onClick={() => goTo(current + 1)}
+          >
             <Icon name="chevron-right" className="rtl:rotate-180" />
           </Button>
         </div>

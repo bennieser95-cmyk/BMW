@@ -17,7 +17,9 @@ export async function createLead(input: CreateLead): Promise<LeadSubmission> {
     requestedDate: input.requestedDate,
     userId: input.userId,
     contact: {
-      firstName: input.firstName, lastName: input.lastName, email: input.email,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      email: input.email,
       ...(input.phone === undefined ? {} : { phone: input.phone }),
     },
     consentAt: input.consentAt,
@@ -28,7 +30,9 @@ export async function createLead(input: CreateLead): Promise<LeadSubmission> {
       await lockUser(transaction, input.userId)
       await assertActiveUser(transaction, input.userId)
     }
-    const [created] = await transaction.insert(leads).values(values)
+    const [created] = await transaction
+      .insert(leads)
+      .values(values)
       .returning({ id: leads.id, createdAt: leads.createdAt })
     if (!created) throw new Error('Lead insert failed')
     return created
@@ -40,7 +44,10 @@ export async function createLead(input: CreateLead): Promise<LeadSubmission> {
 export const leadRepository: LeadRepositoryPort = {
   create: createLead,
   async purgeExpired(before) {
-    const removed = await getDb().delete(leads).where(lt(leads.createdAt, before)).returning({ id: leads.id })
+    const removed = await getDb()
+      .delete(leads)
+      .where(lt(leads.createdAt, before))
+      .returning({ id: leads.id })
     logger.info({ event: 'leads.purged', count: removed.length }, 'Retention purge completed')
     return removed.length
   },

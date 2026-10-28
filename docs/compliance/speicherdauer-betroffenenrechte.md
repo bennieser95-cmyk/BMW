@@ -2,13 +2,13 @@
 
 ## Speicher- und Löschfristen
 
-| Datenart | Zielvorgabe | Technischer Nachweis / Owner |
-|---|---|---|
-| Leads / Probefahrtanfragen | Automatische Löschung nach 90 Tagen | Cron `/api/cron/purge-leads`, Alarm bei Fehlschlag; Fachbereich/DPO bestätigt Berechnung und Ausnahmen |
-| Anwendungs-/Zugriffslogs | 30 Tage | Vercel-/Sentry-/Log-Drain-Aufbewahrung je Anbieter verifizieren; PII vermeiden |
-| Auth-Konten und Sessions | Nach Zweck, Löschanfrage und Anbieterfunktion | Neon Auth-/Neon-Konsole und Löschpfad prüfen; Product/Datenschutz |
-| Consent-Nachweise | Dauer nach freigegebenem Nachweiszweck | DPO-Freigabe und minimal erforderliche Felder |
-| Backups/Restore-Branches | Anbieterfenster/planabhängig | Plan-/Restore-Fenster verifizieren; Ablauf/Überschreibung dokumentieren |
+| Datenart                   | Zielvorgabe                                   | Technischer Nachweis / Owner                                                                           |
+| -------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Leads / Probefahrtanfragen | Automatische Löschung nach 90 Tagen           | Cron `/api/cron/purge-leads`, Alarm bei Fehlschlag; Fachbereich/DPO bestätigt Berechnung und Ausnahmen |
+| Anwendungs-/Zugriffslogs   | 30 Tage                                       | Vercel-/Sentry-/Log-Drain-Aufbewahrung je Anbieter verifizieren; PII vermeiden                         |
+| Auth-Konten und Sessions   | Nach Zweck, Löschanfrage und Anbieterfunktion | Neon Auth-/Neon-Konsole und Löschpfad prüfen; Product/Datenschutz                                      |
+| Consent-Nachweise          | Dauer nach freigegebenem Nachweiszweck        | DPO-Freigabe und minimal erforderliche Felder                                                          |
+| Backups/Restore-Branches   | Anbieterfenster/planabhängig                  | Plan-/Restore-Fenster verifizieren; Ablauf/Überschreibung dokumentieren                                |
 
 Löschung in Primärsystem, abgeleiteten Systemen und Ablauf von Backups getrennt
 nachweisen. Preview-/Staging-Daten sind synthetisch/anonymisiert.

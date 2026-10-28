@@ -7,7 +7,6 @@ import { cn } from '@/lib/cn'
 
 import { HeroVideo } from './hero-video'
 
-
 export interface HeroCta {
   label: string
   href: string
@@ -41,9 +40,11 @@ export function HeroBanner({
   const still = media.type === 'video' ? media.poster : media
 
   return (
-    <section className="relative isolate flex min-h-svh items-end overflow-hidden bg-text text-on-media">
+    <section className="bg-text text-on-media relative isolate flex min-h-svh items-end overflow-hidden">
       <Media media={still} sizes="100vw" preload />
-      {media.type === 'video' && videoLabels ? <HeroVideo src={media.src} labels={videoLabels} /> : null}
+      {media.type === 'video' && videoLabels ? (
+        <HeroVideo src={media.src} labels={videoLabels} />
+      ) : null}
       <div aria-hidden="true" className="media-scrim absolute inset-0" />
       <div
         className={cn(
@@ -60,7 +61,12 @@ export function HeroBanner({
               <NextLink href={cta.primary.href}>{cta.primary.label}</NextLink>
             </Button>
             {cta.secondary ? (
-              <Button asChild size="lg" variant="secondary" className="border-on-media text-on-media hover:bg-overlay">
+              <Button
+                asChild
+                size="lg"
+                variant="secondary"
+                className="border-on-media text-on-media hover:bg-overlay"
+              >
                 <NextLink href={cta.secondary.href}>{cta.secondary.label}</NextLink>
               </Button>
             ) : null}

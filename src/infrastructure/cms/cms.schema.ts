@@ -12,8 +12,11 @@ export const cmsModelSchema = z.object({
   rangeKm: z.number().int().nonnegative(),
 })
 export const dealerSchema = z.object({
-  id: slugSchema, name: z.string().min(1), city: z.string().min(1),
-  postalCode: z.string().regex(/^\d{5}$/), address: z.string().min(1),
+  id: slugSchema,
+  name: z.string().min(1),
+  city: z.string().min(1),
+  postalCode: z.string().regex(/^\d{5}$/),
+  address: z.string().min(1),
   geo: z.object({ lat: z.number().min(-90).max(90), lon: z.number().min(-180).max(180) }),
   services: z.array(z.string()).max(20),
 })

@@ -40,10 +40,10 @@ export function FormField({
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>
-      <label htmlFor={controlId} className="text-sm font-medium text-text">
+      <label htmlFor={controlId} className="text-text text-sm font-medium">
         {label}
         {required ? (
-          <span aria-hidden="true" className="ms-1 text-danger">
+          <span aria-hidden="true" className="text-danger ms-1">
             *
           </span>
         ) : null}

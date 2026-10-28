@@ -8,7 +8,9 @@ export const dynamic = 'force-dynamic'
 export function GET(request: Request): Promise<Response> {
   return handleRoute(request, async () => {
     if (!env.CRON_SECRET) throw new ServiceUnavailableError('CRON_NOT_CONFIGURED')
-    if (!constantTimeEqual(request.headers.get('authorization') ?? '', `Bearer ${env.CRON_SECRET}`)) {
+    if (
+      !constantTimeEqual(request.headers.get('authorization') ?? '', `Bearer ${env.CRON_SECRET}`)
+    ) {
       throw new HttpError(401, 'INVALID_CRON_SECRET')
     }
     const removed = await leadStore.purgeExpired(new Date(Date.now() - 90 * 86400000))

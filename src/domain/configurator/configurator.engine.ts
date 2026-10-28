@@ -19,7 +19,10 @@ export function applySelection(
     option.excludes?.find((id) => selectedIds.has(id)) ??
     config.selections.find(({ excludes }) => excludes?.includes(option.id))?.id
   if (excluded) {
-    return { ok: false, error: { code: 'EXCLUDES', optionId: option.id, relatedOptionId: excluded } }
+    return {
+      ok: false,
+      error: { code: 'EXCLUDES', optionId: option.id, relatedOptionId: excluded },
+    }
   }
   const categorySelection = config.selections.find(({ category }) => category === option.category)
   if (categorySelection && categorySelection.id !== option.id) {
@@ -35,7 +38,9 @@ export function applySelection(
   const replaced = config.selections.filter(({ category }) => category !== option.category)
   const selections = [...replaced, option]
   for (const selection of selections) {
-    const requirement = selection.requires?.find((id) => !selections.some((candidate) => candidate.id === id))
+    const requirement = selection.requires?.find(
+      (id) => !selections.some((candidate) => candidate.id === id),
+    )
     if (requirement) {
       return {
         ok: false,
@@ -47,7 +52,10 @@ export function applySelection(
 }
 
 export function calculateTotalPrice(config: Configuration): number {
-  return config.basePriceCents + config.selections.reduce((total, option) => total + option.priceDeltaCents, 0)
+  return (
+    config.basePriceCents +
+    config.selections.reduce((total, option) => total + option.priceDeltaCents, 0)
+  )
 }
 
 export function buildConfigurationCode(config: Configuration): string {

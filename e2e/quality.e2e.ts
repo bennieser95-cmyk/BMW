@@ -7,11 +7,13 @@ test('home exposes basic accessible landmarks and names @a11y', async ({ page })
   await expect(page.getByRole('main')).toBeVisible()
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await expect(page.locator('img:not([alt])')).toHaveCount(0)
-  const buttonsHaveNames = await page.locator('button').evaluateAll((buttons) =>
-    buttons.every((button) =>
-      Boolean(button.getAttribute('aria-label')?.trim() || button.textContent?.trim()),
-    ),
-  )
+  const buttonsHaveNames = await page
+    .locator('button')
+    .evaluateAll((buttons) =>
+      buttons.every((button) =>
+        Boolean(button.getAttribute('aria-label')?.trim() || button.textContent?.trim()),
+      ),
+    )
   expect(buttonsHaveNames).toBe(true)
 })
 

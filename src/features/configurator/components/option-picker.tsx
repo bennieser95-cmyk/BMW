@@ -35,19 +35,22 @@ export function OptionPicker(props: OptionPickerProps) {
   const { options, disabledReasons = {}, locale, labels, mode } = props
   const name = useId()
 
-  const isChecked = (id: string) => (props.mode === 'single' ? props.value === id : props.value.includes(id))
+  const isChecked = (id: string) =>
+    props.mode === 'single' ? props.value === id : props.value.includes(id)
 
   const toggle = (id: string) => {
     if (props.mode === 'single') {
       props.onChange(id)
       return
     }
-    props.onChange(props.value.includes(id) ? props.value.filter((value) => value !== id) : [...props.value, id])
+    props.onChange(
+      props.value.includes(id) ? props.value.filter((value) => value !== id) : [...props.value, id],
+    )
   }
 
   return (
     <fieldset className="flex flex-col gap-2">
-      <legend className="pb-2 text-xl font-medium text-text">{labels.legend}</legend>
+      <legend className="text-text pb-2 text-xl font-medium">{labels.legend}</legend>
       {options.map((option) => {
         const inputId = `${name}-${option.id}`
         const reason = disabledReasons[option.id]
@@ -55,15 +58,17 @@ export function OptionPicker(props: OptionPickerProps) {
         const reasonId = reason ? `${inputId}-reason` : undefined
         const describedBy = [descriptionId, reasonId].filter(Boolean).join(' ') || undefined
         const price =
-          option.priceDeltaCents === 0 ? labels.included : `+ ${formatPrice(option.priceDeltaCents, locale)}`
+          option.priceDeltaCents === 0
+            ? labels.included
+            : `+ ${formatPrice(option.priceDeltaCents, locale)}`
 
         return (
           <div
             key={option.id}
             className={cn(
               'relative flex items-center gap-4 rounded-sm border p-4',
-              'has-checked:border-2 has-checked:border-text has-focus-visible:focus-ring',
-              'has-disabled:border-dashed has-disabled:bg-surface',
+              'has-checked:border-text has-focus-visible:focus-ring has-checked:border-2',
+              'has-disabled:bg-surface has-disabled:border-dashed',
               'border-border-strong',
             )}
           >
@@ -76,31 +81,34 @@ export function OptionPicker(props: OptionPickerProps) {
               disabled={reason !== undefined}
               aria-describedby={describedBy}
               onChange={() => toggle(option.id)}
-              className="size-6 shrink-0 cursor-pointer accent-brand-primary disabled:cursor-not-allowed"
+              className="accent-brand-primary size-6 shrink-0 cursor-pointer disabled:cursor-not-allowed"
             />
             {option.swatch ? (
               <span
                 aria-hidden="true"
-                className="size-8 shrink-0 rounded-pill border border-border-strong"
+                className="rounded-pill border-border-strong size-8 shrink-0 border"
                 style={{ backgroundColor: option.swatch }}
               />
             ) : null}
             <div className="flex min-w-0 flex-1 flex-col gap-1">
-              <label htmlFor={inputId} className="cursor-pointer font-medium text-text after:absolute after:inset-0 after:content-['']">
+              <label
+                htmlFor={inputId}
+                className="text-text cursor-pointer font-medium after:absolute after:inset-0 after:content-['']"
+              >
                 {option.label}
               </label>
               {option.description ? (
-                <span id={descriptionId} className="text-sm text-text-muted">
+                <span id={descriptionId} className="text-text-muted text-sm">
                   {option.description}
                 </span>
               ) : null}
               {reason ? (
-                <span id={reasonId} className="text-sm text-text">
+                <span id={reasonId} className="text-text text-sm">
                   {reason}
                 </span>
               ) : null}
             </div>
-            <span className="shrink-0 text-sm font-medium tabular-nums text-text">{price}</span>
+            <span className="text-text shrink-0 text-sm font-medium tabular-nums">{price}</span>
           </div>
         )
       })}

@@ -20,7 +20,8 @@ export const badgeVariants = cva(
   },
 )
 
-export interface BadgeProps extends ComponentPropsWithRef<'span'>, VariantProps<typeof badgeVariants> {}
+export interface BadgeProps
+  extends ComponentPropsWithRef<'span'>, VariantProps<typeof badgeVariants> {}
 
 /** Small status label such as "Neu" or "Elektrisch". */
 export function Badge({ tone, className, ...props }: BadgeProps) {

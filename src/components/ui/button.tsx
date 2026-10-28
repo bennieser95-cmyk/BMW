@@ -18,8 +18,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          'border-transparent bg-brand-primary text-on-brand hover:bg-brand-primary-hover',
+        primary: 'border-transparent bg-brand-primary text-on-brand hover:bg-brand-primary-hover',
         secondary: 'border-text bg-transparent text-text hover:bg-surface',
         ghost:
           'border-transparent bg-transparent text-brand-primary underline-offset-4 hover:underline',

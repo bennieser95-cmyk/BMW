@@ -6,7 +6,9 @@ export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 type Context = { params: Promise<{ id: string }> }
 export function GET(request: Request, context: Context): Promise<Response> {
-  return handleRoute(request, async () => json(await accounts.find(idSchema.parse((await context.params).id))))
+  return handleRoute(request, async () =>
+    json(await accounts.find(idSchema.parse((await context.params).id))),
+  )
 }
 export function PATCH(request: Request, context: Context): Promise<Response> {
   return handleRoute(request, async () => {

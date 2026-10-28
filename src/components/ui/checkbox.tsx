@@ -27,28 +27,36 @@ export function Checkbox({ label, hint, error, id, required, className, ...props
   return (
     <div className={cn('flex flex-col gap-1', className)}>
       <div className="flex items-start gap-3">
-        <span className="flex size-touch shrink-0 items-center justify-center">
+        <span className="size-touch flex shrink-0 items-center justify-center">
           <input
             id={checkboxId}
             type="checkbox"
             required={required}
             aria-invalid={error ? true : undefined}
             aria-describedby={describedBy(hint && hintId, error && errorId)}
-            className="size-6 cursor-pointer accent-brand-primary disabled:cursor-not-allowed"
+            className="accent-brand-primary size-6 cursor-pointer disabled:cursor-not-allowed"
             {...props}
           />
         </span>
-        <label htmlFor={checkboxId} className="cursor-pointer py-3 text-base text-text">
+        <label htmlFor={checkboxId} className="text-text cursor-pointer py-3 text-base">
           {label}
           {required ? (
-            <span aria-hidden="true" className="ms-1 text-danger">
+            <span aria-hidden="true" className="text-danger ms-1">
               *
             </span>
           ) : null}
         </label>
       </div>
-      {hint ? <FieldMessage id={hintId} tone="hint">{hint}</FieldMessage> : null}
-      {error ? <FieldMessage id={errorId} tone="error">{error}</FieldMessage> : null}
+      {hint ? (
+        <FieldMessage id={hintId} tone="hint">
+          {hint}
+        </FieldMessage>
+      ) : null}
+      {error ? (
+        <FieldMessage id={errorId} tone="error">
+          {error}
+        </FieldMessage>
+      ) : null}
     </div>
   )
 }

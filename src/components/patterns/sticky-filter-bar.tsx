@@ -20,7 +20,10 @@ export function StickyFilterBar({ label, children, endSlot, className }: StickyF
   return (
     <section
       aria-label={label}
-      className={cn('sticky top-0 z-(--z-header) border-b border-border bg-bg/95 backdrop-blur', className)}
+      className={cn(
+        'border-border bg-bg/95 sticky top-0 z-(--z-header) border-b backdrop-blur',
+        className,
+      )}
     >
       <div className="layout-container flex flex-wrap items-center gap-2 py-2">
         <div className="flex flex-1 flex-wrap items-center gap-2">{children}</div>

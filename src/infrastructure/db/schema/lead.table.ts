@@ -11,12 +11,14 @@ export const leads = pgTable(
     modelSlug: text('model_slug'),
     dealerId: text('dealer_id'),
     userId: text('user_id'),
-    contact: jsonb('contact').$type<{
-      firstName: string
-      lastName: string
-      email: string
-      phone?: string
-    }>().notNull(),
+    contact: jsonb('contact')
+      .$type<{
+        firstName: string
+        lastName: string
+        email: string
+        phone?: string
+      }>()
+      .notNull(),
     requestedDate: text('requested_date'),
     consentAt: timestamp('consent_at', { withTimezone: true }).notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),

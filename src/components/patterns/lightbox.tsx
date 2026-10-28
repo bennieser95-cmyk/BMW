@@ -36,6 +36,8 @@ const SWIPE_THRESHOLD_PX = 48
  */
 export function Lightbox({ items, index, onIndexChange, labels }: LightboxProps) {
   const pointerStartX = useRef<number | null>(null)
+  // No Dialog.Trigger exists (thumbnails open it), so Radix cannot restore focus by itself.
+  const returnFocusTo = useRef<HTMLElement | null>(null)
   const total = items.length
   const item = index === null ? undefined : items[index]
 
@@ -56,13 +58,24 @@ export function Lightbox({ items, index, onIndexChange, labels }: LightboxProps)
   }
 
   return (
-    <Dialog.Root open={item !== undefined} onOpenChange={(open) => (open ? undefined : onIndexChange(null))}>
+    <Dialog.Root
+      open={item !== undefined}
+      onOpenChange={(open) => (open ? undefined : onIndexChange(null))}
+    >
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-(--z-modal) bg-overlay motion-safe:animate-fade-in" />
+        <Dialog.Overlay className="bg-overlay motion-safe:animate-fade-in fixed inset-0 z-(--z-modal)" />
         <Dialog.Content
           aria-describedby={undefined}
+          onOpenAutoFocus={() => {
+            returnFocusTo.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+          }}
+          onCloseAutoFocus={(event) => {
+            if (!returnFocusTo.current?.isConnected) return
+            event.preventDefault()
+            returnFocusTo.current.focus()
+          }}
           onKeyDown={onKeyDown}
-          className="fixed inset-0 z-(--z-modal) flex flex-col text-on-media"
+          className="text-on-media fixed inset-0 z-(--z-modal) flex flex-col"
         >
           <div className="flex items-center justify-between gap-4 p-4">
             <Dialog.Title className="text-sm" aria-live="polite">
@@ -74,7 +87,12 @@ export function Lightbox({ items, index, onIndexChange, labels }: LightboxProps)
               )}
             </Dialog.Title>
             <Dialog.Close asChild>
-              <Button variant="ghost" size="icon" aria-label={labels.close} className="text-on-media">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={labels.close}
+                className="text-on-media"
+              >
                 <Icon name="close" />
               </Button>
             </Dialog.Close>
@@ -91,16 +109,30 @@ export function Lightbox({ items, index, onIndexChange, labels }: LightboxProps)
                 <div className="relative flex-1">
                   <Media media={item.media} sizes="100vw" className="object-contain" />
                 </div>
-                {item.caption ? <figcaption className="pt-2 text-center text-sm">{item.caption}</figcaption> : null}
+                {item.caption ? (
+                  <figcaption className="pt-2 text-center text-sm">{item.caption}</figcaption>
+                ) : null}
               </figure>
             ) : null}
           </div>
           {total > 1 ? (
             <div className="flex justify-center gap-4 p-4">
-              <Button variant="secondary" size="icon" aria-label={labels.previous} onClick={() => step(-1)} className="border-on-media text-on-media hover:bg-overlay">
+              <Button
+                variant="secondary"
+                size="icon"
+                aria-label={labels.previous}
+                onClick={() => step(-1)}
+                className="border-on-media text-on-media hover:bg-overlay"
+              >
                 <Icon name="chevron-left" className="rtl:rotate-180" />
               </Button>
-              <Button variant="secondary" size="icon" aria-label={labels.next} onClick={() => step(1)} className="border-on-media text-on-media hover:bg-overlay">
+              <Button
+                variant="secondary"
+                size="icon"
+                aria-label={labels.next}
+                onClick={() => step(1)}
+                className="border-on-media text-on-media hover:bg-overlay"
+              >
                 <Icon name="chevron-right" className="rtl:rotate-180" />
               </Button>
             </div>

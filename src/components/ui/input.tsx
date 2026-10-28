@@ -29,10 +29,10 @@ export function Input({ label, hint, error, id, required, className, ...props }:
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>
-      <label htmlFor={inputId} className="text-sm font-medium text-text">
+      <label htmlFor={inputId} className="text-text text-sm font-medium">
         {label}
         {required ? (
-          <span aria-hidden="true" className="ms-1 text-danger">
+          <span aria-hidden="true" className="text-danger ms-1">
             *
           </span>
         ) : null}
@@ -45,8 +45,16 @@ export function Input({ label, hint, error, id, required, className, ...props }:
         className={controlClasses}
         {...props}
       />
-      {hint ? <FieldMessage id={hintId} tone="hint">{hint}</FieldMessage> : null}
-      {error ? <FieldMessage id={errorId} tone="error">{error}</FieldMessage> : null}
+      {hint ? (
+        <FieldMessage id={hintId} tone="hint">
+          {hint}
+        </FieldMessage>
+      ) : null}
+      {error ? (
+        <FieldMessage id={errorId} tone="error">
+          {error}
+        </FieldMessage>
+      ) : null}
     </div>
   )
 }

@@ -27,7 +27,10 @@ describe('Breadcrumb', () => {
     const data = JSON.parse(script?.textContent ?? '{}') as {
       itemListElement: Array<{ position: number; item?: string }>
     }
-    expect(data.itemListElement[1]).toMatchObject({ position: 2, item: 'https://bavaria.example/de-de/modelle' })
+    expect(data.itemListElement[1]).toMatchObject({
+      position: 2,
+      item: 'https://bavaria.example/de-de/modelle',
+    })
   })
 
   it('should have no axe violations when rendered', async () => {

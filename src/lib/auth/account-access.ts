@@ -1,8 +1,7 @@
 import 'server-only'
 
 import type { AuthenticatedUser } from '@/domain/auth/auth.port'
-import { neonAuthAdapter } from '@/infrastructure/auth/neon-auth.adapter'
-import { requireUser } from '@/infrastructure/auth/neon-auth.adapter'
+import { neonAuthAdapter, requireUser } from '@/infrastructure/auth/neon-auth.adapter'
 import { accountRepository } from '@/infrastructure/db/account.repository'
 
 export { neonAuthAdapter }

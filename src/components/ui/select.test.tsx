@@ -23,7 +23,12 @@ describe('Select', () => {
 
   it('should have no axe violations when rendered with placeholder and error', async () => {
     const { container } = render(
-      <Select label="Modell" placeholder="Bitte wählen" error="Pflichtfeld" options={[{ value: 'a', label: 'A' }]} />,
+      <Select
+        label="Modell"
+        placeholder="Bitte wählen"
+        error="Pflichtfeld"
+        options={[{ value: 'a', label: 'A' }]}
+      />,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

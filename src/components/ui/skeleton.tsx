@@ -12,7 +12,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       aria-hidden="true"
-      className={cn('rounded-sm bg-border motion-safe:animate-pulse', className)}
+      className={cn('bg-border rounded-sm motion-safe:animate-pulse', className)}
       {...props}
     />
   )

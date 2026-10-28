@@ -45,12 +45,15 @@ export function Breadcrumb({ items, label, baseUrl, className }: BreadcrumbProps
               {item.href && !isCurrent ? (
                 <NextLink
                   href={item.href}
-                  className="inline-flex min-h-touch items-center text-text-muted underline-offset-4 hover:text-text hover:underline"
+                  className="min-h-touch text-text-muted hover:text-text inline-flex items-center underline-offset-4 hover:underline"
                 >
                   {item.label}
                 </NextLink>
               ) : (
-                <span aria-current={isCurrent ? 'page' : undefined} className="font-medium text-text">
+                <span
+                  aria-current={isCurrent ? 'page' : undefined}
+                  className="text-text font-medium"
+                >
                   {item.label}
                 </span>
               )}

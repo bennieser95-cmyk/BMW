@@ -22,7 +22,14 @@ export interface ConsentBannerProps {
   value: Record<string, boolean>
   onChange: (categoryId: string, granted: boolean) => void
   onDecision: (decision: ConsentDecision) => void
-  labels: { title: string; description: string; accept: string; reject: string; settings: string; save: string }
+  labels: {
+    title: string
+    description: string
+    accept: string
+    reject: string
+    settings: string
+    save: string
+  }
   /** Link to the privacy policy, rendered after the description. */
   policyLink?: ReactNode
 }
@@ -45,13 +52,13 @@ export function ConsentBanner({
   return (
     <section
       aria-labelledby={titleId}
-      className="fixed inset-x-0 bottom-0 z-(--z-overlay) border-t border-border bg-bg text-text shadow-3 motion-safe:animate-fade-in"
+      className="border-border bg-bg text-text shadow-3 motion-safe:animate-fade-in fixed inset-x-0 bottom-0 z-(--z-overlay) border-t"
     >
       <div className="layout-container flex max-h-svh flex-col gap-4 overflow-y-auto py-6">
         <h2 id={titleId} className="text-xl font-medium">
           {labels.title}
         </h2>
-        <p className="max-w-prose text-sm text-text-muted">
+        <p className="text-text-muted max-w-prose text-sm">
           {labels.description} {policyLink}
         </p>
         {showSettings ? (

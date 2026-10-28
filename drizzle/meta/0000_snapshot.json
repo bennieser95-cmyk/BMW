@@ -209,8 +209,8 @@
         }
       },
       "indexes": {
-        "uq_account_deletions_user_id": {
-          "name": "uq_account_deletions_user_id",
+        "idx_account_deletions_user_id": {
+          "name": "idx_account_deletions_user_id",
           "columns": [
             {
               "expression": "user_id",
@@ -270,8 +270,8 @@
         }
       },
       "indexes": {
-        "uq_rate_limits_key": {
-          "name": "uq_rate_limits_key",
+        "idx_rate_limits_key": {
+          "name": "idx_rate_limits_key",
           "columns": [
             {
               "expression": "key",
@@ -340,8 +340,8 @@
         }
       },
       "indexes": {
-        "uq_webhook_receipts_digest": {
-          "name": "uq_webhook_receipts_digest",
+        "idx_webhook_receipts_digest": {
+          "name": "idx_webhook_receipts_digest",
           "columns": [
             {
               "expression": "digest",

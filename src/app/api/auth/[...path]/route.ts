@@ -7,7 +7,15 @@ import { auth } from '@/lib/auth/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 type Context = { params: Promise<{ path: string[] }> }
-const pathSchema = z.array(z.string().regex(/^[a-z0-9-]+$/).max(80)).min(1).max(3)
+const pathSchema = z
+  .array(
+    z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .max(80),
+  )
+  .min(1)
+  .max(3)
 
 export function GET(request: Request, context: Context): Promise<Response> {
   return handleRoute(request, async () => {

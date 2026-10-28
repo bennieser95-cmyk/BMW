@@ -9,15 +9,28 @@ export function ModelCard({ vehicle, locale }: { vehicle: Vehicle; locale: strin
   const messages = getMessages(locale)
   return (
     <article className="model-card">
-      <Link aria-label={`${vehicle.name} – ${messages.models.details}`} href={`/${locale}/modelle/${vehicle.slug}`}>
+      <Link
+        aria-label={`${vehicle.name} – ${messages.models.details}`}
+        href={`/${locale}/modelle/${vehicle.slug}`}
+      >
         <div className="vehicle-art" style={{ background: vehicle.heroImage.url }}>
-          <Image alt={vehicle.heroImage.alt} fill sizes="(max-width: 767px) 90vw, (max-width: 1023px) 45vw, 25vw" src="/media/vehicle-illustration.svg" />
+          <Image
+            alt={vehicle.heroImage.alt}
+            fill
+            sizes="(max-width: 767px) 90vw, (max-width: 1023px) 45vw, 25vw"
+            src="/media/vehicle-illustration.svg"
+          />
           <span>{vehicle.name}</span>
         </div>
         <div className="model-card-copy">
-          <p className="eyebrow">{messages.vehicle.bodyTypes[vehicle.bodyType]} · {messages.vehicle.fuelType}: {messages.vehicle.fuelTypes[vehicle.fuelType]}</p>
+          <p className="eyebrow">
+            {messages.vehicle.bodyTypes[vehicle.bodyType]} · {messages.vehicle.fuelType}:{' '}
+            {messages.vehicle.fuelTypes[vehicle.fuelType]}
+          </p>
           <h3>{vehicle.name}</h3>
-          <p>{messages.vehicle.from} {formatPrice(vehicle.basePriceCents, locale)}</p>
+          <p>
+            {messages.vehicle.from} {formatPrice(vehicle.basePriceCents, locale)}
+          </p>
         </div>
       </Link>
     </article>

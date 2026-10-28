@@ -6,11 +6,11 @@ export default function NotFoundPage(): React.ReactNode {
   const translate = useTranslations('common')
 
   return (
-    <main className="page-error">
+    <div className="page-error">
       <h1>{translate('notFound')}</h1>
       <Link className="button button-primary" href="/">
         {translate('home')}
       </Link>
-    </main>
+    </div>
   )
 }

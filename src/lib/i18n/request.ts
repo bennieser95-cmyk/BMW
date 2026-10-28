@@ -5,7 +5,8 @@ import { getMessages } from '@/lib/messages'
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requestedLocale = await requestLocale
-  const locale = locales.find((supportedLocale) => supportedLocale === requestedLocale) ?? defaultLocale
+  const locale =
+    locales.find((supportedLocale) => supportedLocale === requestedLocale) ?? defaultLocale
 
   return {
     locale,

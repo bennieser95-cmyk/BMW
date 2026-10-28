@@ -23,7 +23,15 @@ describe('FormField', () => {
 
   it('should have no axe violations when rendered', async () => {
     const { container } = render(
-      <FormField label="Händler" error="Pflichtfeld" control={<select><option>A</option></select>} />,
+      <FormField
+        label="Händler"
+        error="Pflichtfeld"
+        control={
+          <select>
+            <option>A</option>
+          </select>
+        }
+      />,
     )
     expect(await axe(container)).toHaveNoViolations()
   })

@@ -4,10 +4,10 @@
 `/api/v1/me/*` beschriebenen Route Handler noch nicht vorhanden. Daher wird
 keine Aussage über die Sicherheit einer Implementierung getroffen.
 
-| Route / Ressource | Eigentümerprüfung im Handler | Positivtest eigener Datensatz | Negativtest fremde Nutzer-ID | Status / Finding |
-|---|---|---|---|---|
-| `/api/v1/me/configurations` (Dok. 03) | Aus serverseitig verifizierter Session abgeleitete `userId`; niemals Client-ID übernehmen | Nach Implementierung ergänzen | Nutzer B kann Ressource von Nutzer A weder lesen, ändern noch löschen | Offen: Route fehlt |
-| Weitere `/api/v1/me/*`-Routen | Je Route aus Session abgeleitete Eigentümerschaft und deny-by-default | Je Ressource ergänzen | Je Operation Cross-User-Request mit 403/404 | Inventar nach Implementierung ergänzen |
+| Route / Ressource                     | Eigentümerprüfung im Handler                                                              | Positivtest eigener Datensatz | Negativtest fremde Nutzer-ID                                          | Status / Finding                       |
+| ------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------- | --------------------------------------------------------------------- | -------------------------------------- |
+| `/api/v1/me/configurations` (Dok. 03) | Aus serverseitig verifizierter Session abgeleitete `userId`; niemals Client-ID übernehmen | Nach Implementierung ergänzen | Nutzer B kann Ressource von Nutzer A weder lesen, ändern noch löschen | Offen: Route fehlt                     |
+| Weitere `/api/v1/me/*`-Routen         | Je Route aus Session abgeleitete Eigentümerschaft und deny-by-default                     | Je Ressource ergänzen         | Je Operation Cross-User-Request mit 403/404                           | Inventar nach Implementierung ergänzen |
 
 Prüfregeln:
 

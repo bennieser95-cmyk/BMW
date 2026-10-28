@@ -16,11 +16,14 @@ export function EmptyState({ title, description, action, className }: EmptyState
   return (
     <div
       role="status"
-      className={cn('flex flex-col items-center gap-4 rounded-md bg-surface px-6 py-16 text-center', className)}
+      className={cn(
+        'bg-surface flex flex-col items-center gap-4 rounded-md px-6 py-16 text-center',
+        className,
+      )}
     >
       <Icon name="search" size="lg" className="text-text-muted" />
-      <p className="text-xl font-medium text-text">{title}</p>
-      {description ? <p className="max-w-prose text-text-muted">{description}</p> : null}
+      <p className="text-text text-xl font-medium">{title}</p>
+      {description ? <p className="text-text-muted max-w-prose">{description}</p> : null}
       {action}
     </div>
   )

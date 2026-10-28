@@ -55,6 +55,18 @@
 - Die Implementierungsabdeckung und bekannte Abweichungen sind in `docs/TRACEABILITY.md`
   dokumentiert. Keine Drizzle-Schemata oder Migrationen wurden geändert.
 
+## AppAuthLiveblocker (Stand 2026-10-28)
+
+- Die lokale `.env.local` fehlt trotz vorheriger Benutzerbestätigung. Die lokale
+  Live-Verifikation von Neon Auth einschließlich OTP-Mailverifikation und
+  Header-Sitzungsstatus bleibt bis zur Einrichtung der benötigten
+  Umgebungsvariablen und einem erfolgreichen Live-Test blockiert.
+- Gemockte Komponententests und erfolgreiche Build-/Typecheck-Gates ersetzen
+  diesen Live-Nachweis nicht. Es wurden keine Secrets angelegt oder dokumentiert.
+- Der Header zeigt bei einem Sitzungsabruffehler einen lokalisierten Status
+  statt eines Gast- oder Konto-Links; technische Fehlerdetails und personenbezogene
+  Daten werden nicht ausgegeben.
+
 ## Offene Projektentscheidungen
 
 - OP-01: Kartenanbieter bleibt offen; MapLibre/OSM ist die dokumentierte Annahme.

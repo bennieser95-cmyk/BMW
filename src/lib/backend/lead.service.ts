@@ -10,7 +10,8 @@ export function createLeadService(auth: AuthPort, cms: CmsPort, repository: Lead
   return {
     async create(input: Lead) {
       if (input.honeypot || !input.consent) throw new ValidationError('Invalid lead')
-      if (input.modelSlug && !await cms.findModelBySlug(input.modelSlug)) throw new ValidationError('Invalid model')
+      if (input.modelSlug && !(await cms.findModelBySlug(input.modelSlug)))
+        throw new ValidationError('Invalid model')
       if (input.dealerId && !(await cms.findDealers()).some(({ id }) => id === input.dealerId)) {
         throw new ValidationError('Invalid dealer')
       }
@@ -18,8 +19,11 @@ export function createLeadService(auth: AuthPort, cms: CmsPort, repository: Lead
       const now = new Date()
       return repository.create({
         kind: input.leadType,
-        firstName: input.firstName, lastName: input.lastName, email: input.email,
-        consentAt: now, createdAt: now,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        email: input.email,
+        consentAt: now,
+        createdAt: now,
         ...(input.phone ? { phone: input.phone } : {}),
         ...(input.modelSlug ? { modelSlug: input.modelSlug } : {}),
         ...(input.dealerId ? { dealerId: input.dealerId } : {}),

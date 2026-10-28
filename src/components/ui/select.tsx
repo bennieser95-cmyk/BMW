@@ -45,10 +45,10 @@ export function Select({
 
   return (
     <div className={cn('flex flex-col gap-2', className)}>
-      <label htmlFor={selectId} className="text-sm font-medium text-text">
+      <label htmlFor={selectId} className="text-text text-sm font-medium">
         {label}
         {required ? (
-          <span aria-hidden="true" className="ms-1 text-danger">
+          <span aria-hidden="true" className="text-danger ms-1">
             *
           </span>
         ) : null}
@@ -72,11 +72,19 @@ export function Select({
         <Icon
           name="chevron-down"
           size="sm"
-          className="pointer-events-none absolute inset-y-0 end-4 my-auto text-text-muted"
+          className="text-text-muted pointer-events-none absolute inset-y-0 end-4 my-auto"
         />
       </div>
-      {hint ? <FieldMessage id={hintId} tone="hint">{hint}</FieldMessage> : null}
-      {error ? <FieldMessage id={errorId} tone="error">{error}</FieldMessage> : null}
+      {hint ? (
+        <FieldMessage id={hintId} tone="hint">
+          {hint}
+        </FieldMessage>
+      ) : null}
+      {error ? (
+        <FieldMessage id={errorId} tone="error">
+          {error}
+        </FieldMessage>
+      ) : null}
     </div>
   )
 }

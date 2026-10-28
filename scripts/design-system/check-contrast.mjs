@@ -75,7 +75,12 @@ function getScrimOverWhite() {
 }
 light['scrim-over-white'] = getScrimOverWhite()
 dark['scrim-over-white'] = light['scrim-over-white']
-PAIRS.push(['on-media', 'scrim-over-white', 4.5, 'Text auf Hero-Scrim über weißem Foto (Worst Case)'])
+PAIRS.push([
+  'on-media',
+  'scrim-over-white',
+  4.5,
+  'Text auf Hero-Scrim über weißem Foto (Worst Case)',
+])
 
 let hasFailure = false
 const rows = [

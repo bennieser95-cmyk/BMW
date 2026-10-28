@@ -10,13 +10,13 @@ import { cmsDatasetSchema } from './cms.schema'
 import dataset from './showroom.json'
 
 export function createCmsAdapter(baseUrl?: string, token?: string): CmsPort {
-  async function load(): Promise<ReturnType<typeof cmsDatasetSchema.parse>> {
+  async function load(modelSlug?: string): Promise<ReturnType<typeof cmsDatasetSchema.parse>> {
     let payload: unknown = dataset
     if (baseUrl) {
       const response = await fetch(new URL('showroom', `${baseUrl.replace(/\/$/, '')}/`), {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
         signal: AbortSignal.timeout(8000),
-        next: { revalidate: 60, tags: ['models', 'content'] },
+        next: { revalidate: 60, tags: ['models', 'content', ...(modelSlug ? [`model:${modelSlug}`] : [])] },
       })
       if (!response.ok) throw new ServiceUnavailableError('CMS_UPSTREAM_ERROR')
       payload = await response.json()
@@ -26,15 +26,21 @@ export function createCmsAdapter(baseUrl?: string, token?: string): CmsPort {
     return parsed.data
   }
   return {
-    async findModels() { return (await load()).models.map(mapCmsModelToModel) },
+    async findModels() {
+      return (await load()).models.map(mapCmsModelToModel)
+    },
     async findModelBySlug(slug) {
-      const model = (await load()).models.find((candidate) => candidate.slug === slug)
+      const model = (await load(slug)).models.find((candidate) => candidate.slug === slug)
       return model ? mapCmsModelToModel(model) : null
     },
     async findOptionsByModelSlug(slug) {
-      return (await load()).models.some((model) => model.slug === slug) ? CONFIGURATOR_OPTIONS : null
+      return (await load(slug)).models.some((model) => model.slug === slug)
+        ? CONFIGURATOR_OPTIONS
+        : null
     },
-    async findDealers() { return (await load()).dealers },
+    async findDealers() {
+      return (await load()).dealers
+    },
   }
 }
 

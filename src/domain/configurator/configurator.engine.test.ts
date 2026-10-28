@@ -1,7 +1,12 @@
 import fc from 'fast-check'
 import { describe, expect, it } from 'vitest'
 
-import { applySelection, buildConfigurationCode, calculateTotalPrice, parseConfigurationCode } from './configurator.engine'
+import {
+  applySelection,
+  buildConfigurationCode,
+  calculateTotalPrice,
+  parseConfigurationCode,
+} from './configurator.engine'
 
 import type { ConfigOption, Configuration } from './configurator.types'
 
@@ -59,14 +64,13 @@ describe('configurator engine', () => {
   it('round-trips compatible selections through a shareable code', () => {
     const config = {
       ...initial,
-      selections: [
-        getOption('engine-standard'),
-        getOption('paint-blue'),
-        getOption('wheel-sport'),
-      ],
+      selections: [getOption('engine-standard'), getOption('paint-blue'), getOption('wheel-sport')],
     }
     const code = buildConfigurationCode(config)
-    expect(parseConfigurationCode(code, options, initial.basePriceCents)).toEqual({ ok: true, value: config })
+    expect(parseConfigurationCode(code, options, initial.basePriceCents)).toEqual({
+      ok: true,
+      value: config,
+    })
   })
 
   it('rejects unknown and malformed configuration codes', () => {
@@ -76,18 +80,24 @@ describe('configurator engine', () => {
 
   it('property: calculated total is base price plus all selected deltas', () => {
     fc.assert(
-      fc.property(fc.integer({ min: 0, max: 1_000_000_000 }), fc.array(fc.integer({ min: -100_000, max: 100_000 }), { maxLength: 10 }), (base, deltas) => {
-        const config: Configuration = {
-          modelSlug: 'synthetic',
-          basePriceCents: base,
-          selections: deltas.map((priceDeltaCents, index) => ({
-            id: `opt-${index}`,
-            category: 'package',
-            priceDeltaCents,
-          })),
-        }
-        expect(calculateTotalPrice(config)).toBe(base + deltas.reduce((sum, delta) => sum + delta, 0))
-      }),
+      fc.property(
+        fc.integer({ min: 0, max: 1_000_000_000 }),
+        fc.array(fc.integer({ min: -100_000, max: 100_000 }), { maxLength: 10 }),
+        (base, deltas) => {
+          const config: Configuration = {
+            modelSlug: 'synthetic',
+            basePriceCents: base,
+            selections: deltas.map((priceDeltaCents, index) => ({
+              id: `opt-${index}`,
+              category: 'package',
+              priceDeltaCents,
+            })),
+          }
+          expect(calculateTotalPrice(config)).toBe(
+            base + deltas.reduce((sum, delta) => sum + delta, 0),
+          )
+        },
+      ),
     )
   })
 })

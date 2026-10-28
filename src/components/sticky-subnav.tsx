@@ -21,14 +21,23 @@ export function StickySubnav({ items }: { items: SubnavItem[] }) {
       },
       { rootMargin: '-20% 0px -65% 0px' },
     )
-    itemIds.split(',').filter(Boolean).forEach((id) => {
-      const section = document.getElementById(id)
-      if (section) observer.observe(section)
-    })
+    itemIds
+      .split(',')
+      .filter(Boolean)
+      .forEach((id) => {
+        const section = document.getElementById(id)
+        if (section) observer.observe(section)
+      })
     return () => observer.disconnect()
   }, [itemIds])
 
-  return <nav aria-label="Seitennavigation" className="filter-bar">
-    {items.map(({ id, label }) => <a aria-current={activeId === id ? 'location' : undefined} href={`#${id}`} key={id}>{label}</a>)}
-  </nav>
+  return (
+    <nav aria-label="Seitennavigation" className="filter-bar">
+      {items.map(({ id, label }) => (
+        <a aria-current={activeId === id ? 'location' : undefined} href={`#${id}`} key={id}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  )
 }

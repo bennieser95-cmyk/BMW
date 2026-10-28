@@ -5,7 +5,11 @@ import { z } from 'zod'
 
 import type { AccountIdentityPort } from '@/domain/account/account.port'
 import type { AuthenticatedUser, AuthPort } from '@/domain/auth/auth.port'
-import { ForbiddenError, ServiceUnavailableError, UnauthorizedError } from '@/domain/shared/domain-error'
+import {
+  ForbiddenError,
+  ServiceUnavailableError,
+  UnauthorizedError,
+} from '@/domain/shared/domain-error'
 import { safeReturnTo } from '@/lib/auth/auth.schema'
 import { getAuth } from '@/lib/auth/server'
 
@@ -39,11 +43,13 @@ async function loadCurrentUser(): Promise<AuthenticatedUser | null> {
     if (result.error.status === 401) return null
     throw new ServiceUnavailableError('AUTH_UPSTREAM_ERROR')
   }
-  if (!result.data?.user) return null
-  const parsed = userSchema.safeParse(result.data.user)
+  if (result.data === null) return null
+  const parsed = userSchema.safeParse(result.data?.user)
   if (!parsed.success) throw new ServiceUnavailableError('INVALID_AUTH_RESPONSE')
   return {
-    id: parsed.data.id, email: parsed.data.email, emailVerified: parsed.data.emailVerified,
+    id: parsed.data.id,
+    email: parsed.data.email,
+    emailVerified: parsed.data.emailVerified,
     ...(parsed.data.name ? { name: parsed.data.name } : {}),
   }
 }
@@ -59,7 +65,8 @@ export const neonAccountIdentity: AccountIdentityPort = {
     const result = await getAuth().deleteUser(password === undefined ? {} : { password })
     if (result.error) {
       if (result.error.status === 401) throw new UnauthorizedError()
-      if (result.error.status === 400 || result.error.status === 403) throw new ForbiddenError('REAUTHENTICATION_REQUIRED')
+      if (result.error.status === 400 || result.error.status === 403)
+        throw new ForbiddenError('REAUTHENTICATION_REQUIRED')
       throw new ServiceUnavailableError('AUTH_DELETION_FAILED')
     }
     if (!result.data?.success) throw new ServiceUnavailableError('AUTH_DELETION_NOT_COMPLETED')

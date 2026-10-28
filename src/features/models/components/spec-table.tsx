@@ -34,17 +34,17 @@ export function SpecTable({ groups, caption, className }: SpecTableProps) {
               id={`spec-${group.id}`}
               scope="colgroup"
               colSpan={2}
-              className="border-b border-border-strong pt-8 pb-2 text-start text-sm font-medium tracking-wide text-text-muted uppercase"
+              className="border-border-strong text-text-muted border-b pt-8 pb-2 text-start text-sm font-medium tracking-wide uppercase"
             >
               {group.title}
             </th>
           </tr>
           {group.rows.map((row) => (
-            <tr key={row.label} className="border-b border-border">
-              <th scope="row" className="py-3 pe-4 text-start font-normal text-text-muted">
+            <tr key={row.label} className="border-border border-b">
+              <th scope="row" className="text-text-muted py-3 pe-4 text-start font-normal">
                 {row.label}
               </th>
-              <td className="py-3 text-end font-medium tabular-nums text-text">{row.value}</td>
+              <td className="text-text py-3 text-end font-medium tabular-nums">{row.value}</td>
             </tr>
           ))}
         </tbody>

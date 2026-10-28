@@ -17,16 +17,24 @@ function getConnectionString(): string {
 }
 
 export function getDb(): ReturnType<typeof httpDrizzle> {
-  return httpDrizzle(neon(getConnectionString(), { fetchOptions: { signal: AbortSignal.timeout(10000) } }))
+  return httpDrizzle(
+    neon(getConnectionString(), { fetchOptions: { signal: AbortSignal.timeout(10000) } }),
+  )
 }
 
-export type DatabaseTransaction = Parameters<Parameters<ReturnType<typeof poolDrizzle>['transaction']>[0]>[0]
+export type DatabaseTransaction = Parameters<
+  Parameters<ReturnType<typeof poolDrizzle>['transaction']>[0]
+>[0]
 
 export async function withTransaction<T>(
   operation: (transaction: DatabaseTransaction) => Promise<T>,
 ): Promise<T> {
   neonConfig.webSocketConstructor = WebSocket
-  const pool = new Pool({ connectionString: getConnectionString(), connectionTimeoutMillis: 10000, query_timeout: 10000 })
+  const pool = new Pool({
+    connectionString: getConnectionString(),
+    connectionTimeoutMillis: 10000,
+    query_timeout: 10000,
+  })
   try {
     return await poolDrizzle(pool).transaction(operation)
   } finally {

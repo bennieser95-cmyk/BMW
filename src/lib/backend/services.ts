@@ -12,7 +12,13 @@ import { createCatalogService } from './catalog.service'
 import { createLeadService } from './lead.service'
 
 export const catalog = createCatalogService(mockCmsAdapter)
-export const accounts = createAccountService(neonAuthAdapter, accountRepository, savedConfigurationRepository, neonAccountIdentity, catalog)
+export const accounts = createAccountService(
+  neonAuthAdapter,
+  accountRepository,
+  savedConfigurationRepository,
+  neonAccountIdentity,
+  catalog,
+)
 export const leads = createLeadService(neonAuthAdapter, mockCmsAdapter, leadRepository)
 export const cms = mockCmsAdapter
 export const security = securityRepository

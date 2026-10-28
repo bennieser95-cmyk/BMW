@@ -16,11 +16,19 @@ export async function lockUser(transaction: DatabaseTransaction, userId: string)
 }
 
 export function deletionKey(userId: string): string {
-  return createHmac('sha256', requireEnv('RATE_LIMIT_SECRET')).update(`account-deletion:${userId}`).digest('hex')
+  return createHmac('sha256', requireEnv('RATE_LIMIT_SECRET'))
+    .update(`account-deletion:${userId}`)
+    .digest('hex')
 }
 
-export async function assertActiveUser(transaction: DatabaseTransaction, userId: string): Promise<void> {
-  const [pending] = await transaction.select({ id: accountDeletions.id })
-    .from(accountDeletions).where(eq(accountDeletions.userId, deletionKey(userId))).limit(1)
+export async function assertActiveUser(
+  transaction: DatabaseTransaction,
+  userId: string,
+): Promise<void> {
+  const [pending] = await transaction
+    .select({ id: accountDeletions.id })
+    .from(accountDeletions)
+    .where(eq(accountDeletions.userId, deletionKey(userId)))
+    .limit(1)
   if (pending) throw new ConflictError('Account deletion is pending', 'ACCOUNT_DELETION_PENDING')
 }

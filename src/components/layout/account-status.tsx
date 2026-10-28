@@ -9,7 +9,7 @@ import { cn } from '@/lib/cn'
 
 export interface AccountStatusProps {
   locale: string
-  labels: { signIn: string; account: string; loading: string }
+  labels: { signIn: string; account: string; loading: string; unavailable: string }
   className?: string
 }
 
@@ -22,12 +22,24 @@ const linkClasses =
  * known to avoid a guest/user flash.
  */
 export function AccountStatus({ locale, labels, className }: AccountStatusProps) {
-  const { data, isPending } = authClient.useSession()
+  const { data, isPending, error } = authClient.useSession()
   const accountPath = `/${locale}/konto`
+
+  if (error) {
+    return (
+      <span
+        className={cn('min-h-touch inline-flex items-center gap-2 px-2 text-sm', className)}
+        role="status"
+      >
+        <Icon name="user" size="sm" />
+        {labels.unavailable}
+      </span>
+    )
+  }
 
   if (isPending) {
     return (
-      <span className={cn('inline-flex min-h-touch items-center', className)} role="status">
+      <span className={cn('min-h-touch inline-flex items-center', className)} role="status">
         <Skeleton className="h-6 w-16" />
         <span className="sr-only">{labels.loading}</span>
       </span>

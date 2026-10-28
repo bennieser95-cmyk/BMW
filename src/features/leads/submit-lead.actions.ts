@@ -11,14 +11,18 @@ export type LeadActionResult = { success: true } | { success: false; message: st
 
 export async function submitLeadAction(formData: FormData): Promise<LeadActionResult> {
   const requestHeaders = new Headers(await headers())
-  const response = await handleRoute(new Request('https://showroom.invalid/actions/submit-lead'), async () => {
-    assertOrigin(requestHeaders)
-    await limitRequest(requestHeaders, security, 'leads')
-    const raw = Object.fromEntries(formData)
-    const parsed = leadSchema.parse({ ...raw, consent: raw.consent === 'on' })
-    await leads.create(parsed)
-    return json({ success: true })
-  })
-  if (!response.ok) return { success: false, message: 'Request could not be processed. Please try again.' }
+  const response = await handleRoute(
+    new Request('https://showroom.invalid/actions/submit-lead'),
+    async () => {
+      assertOrigin(requestHeaders)
+      await limitRequest(requestHeaders, security, 'leads')
+      const raw = Object.fromEntries(formData)
+      const parsed = leadSchema.parse({ ...raw, consent: raw.consent === 'on' })
+      await leads.create(parsed)
+      return json({ success: true })
+    },
+  )
+  if (!response.ok)
+    return { success: false, message: 'Request could not be processed. Please try again.' }
   return { success: true }
 }

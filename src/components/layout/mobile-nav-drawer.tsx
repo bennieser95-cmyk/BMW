@@ -57,19 +57,26 @@ export function MobileNavDrawer({
       <Dialog.Portal>
         <Dialog.Content
           aria-describedby={undefined}
-          className="fixed inset-0 z-(--z-modal) flex flex-col overflow-y-auto bg-bg motion-safe:animate-slide-in-end"
+          className="bg-bg motion-safe:animate-slide-in-end fixed inset-0 z-(--z-modal) flex flex-col overflow-y-auto"
         >
-          <div className="layout-container flex h-header-sm items-center justify-between border-b border-border">
-            <Dialog.Title className="text-sm font-medium text-text-muted">{labels.mobileNav}</Dialog.Title>
+          <div className="layout-container h-header-sm border-border flex items-center justify-between border-b">
+            <Dialog.Title className="text-text-muted text-sm font-medium">
+              {labels.mobileNav}
+            </Dialog.Title>
             <Dialog.Close asChild>
-              <Button variant="ghost" size="icon" aria-label={labels.closeMenu} className="text-text">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={labels.closeMenu}
+                className="text-text"
+              >
                 <Icon name="close" />
               </Button>
             </Dialog.Close>
           </div>
           <nav aria-label={labels.mobileNav} className="layout-container flex-1 py-4">
             <Accordion.Root type="multiple" asChild>
-              <ul className="flex flex-col divide-y divide-border">
+              <ul className="divide-border flex flex-col divide-y">
                 {items.map((item) =>
                   item.groups ? (
                     <Accordion.Item key={item.id} value={item.id} asChild>
@@ -80,7 +87,7 @@ export function MobileNavDrawer({
                               {item.label}
                               <Icon
                                 name="chevron-down"
-                                className="transition-transform duration-(--motion-fast) ease-standard group-data-[state=open]:rotate-180"
+                                className="ease-standard transition-transform duration-(--motion-fast) group-data-[state=open]:rotate-180"
                               />
                             </Accordion.Trigger>
                           </h2>
@@ -93,7 +100,7 @@ export function MobileNavDrawer({
                                   <NextLink
                                     href={link.href}
                                     onClick={() => changeOpen(false)}
-                                    className="flex min-h-touch items-center ps-4 text-base text-text hover:underline"
+                                    className="min-h-touch text-text flex items-center ps-4 text-base hover:underline"
                                   >
                                     {link.label}
                                   </NextLink>
@@ -120,7 +127,7 @@ export function MobileNavDrawer({
             </Accordion.Root>
           </nav>
           {footerSlot ? (
-            <div className="layout-container flex items-center gap-4 border-t border-border py-4">
+            <div className="layout-container border-border flex items-center gap-4 border-t py-4">
               {footerSlot}
             </div>
           ) : null}

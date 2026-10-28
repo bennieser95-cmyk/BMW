@@ -18,18 +18,18 @@ der Plattformkonsole aktivieren; dieses Dokument allein erzeugt keine Alarme.
 
 ## Alarmkatalog
 
-| Signal | Bedingung | Stufe | Runbook |
-|---|---|---|---|
-| Uptime `/api/health` | Ausfall > 2 Minuten | P1 | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md), danach [`db-unreachable.md`](../runbooks/db-unreachable.md) |
-| HTTP 5xx | > 2 % über 5 Minuten | P1 | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md) |
-| Latenz/Timeout | p95 > 800 ms oder Function-Timeouts | P2 | [`db-unreachable.md`](../runbooks/db-unreachable.md), bei Release-Korrelation [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md) |
-| Neon-Verbindungen | > 80 % des verfügbaren Limits, hohe CPU oder Speicher | P2 | [`db-unreachable.md`](../runbooks/db-unreachable.md) |
-| Neon Auth | deutlicher Anstieg bei Auth-Fehlern (401/5xx) | P2 | [`auth-outage.md`](../runbooks/auth-outage.md) |
-| Web Vitals | LCP p75 > 2,5 s | P3 | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md) |
-| Cron `purge-leads` | Job fehlgeschlagen oder erwartete Ausführung fehlt | P3 | [`db-unreachable.md`](../runbooks/db-unreachable.md) |
-| Kosten | 80 % des freigegebenen Monatsbudgets | P3 | [`cost-budget.md`](../runbooks/cost-budget.md) |
-| Secret-Ablauf/Rotation | Rotation überfällig oder Missbrauchsverdacht | P2 | [`secret-rotation.md`](../runbooks/secret-rotation.md) |
-| Restore-Test | Quartalsfrist überschritten oder Restore nicht verifizierbar | P2 | [`restore-neon-branch.md`](../runbooks/restore-neon-branch.md) |
+| Signal                 | Bedingung                                                    | Stufe | Runbook                                                                                                                                        |
+| ---------------------- | ------------------------------------------------------------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Uptime `/api/health`   | Ausfall > 2 Minuten                                          | P1    | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md), danach [`db-unreachable.md`](../runbooks/db-unreachable.md)                  |
+| HTTP 5xx               | > 2 % über 5 Minuten                                         | P1    | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md)                                                                               |
+| Latenz/Timeout         | p95 > 800 ms oder Function-Timeouts                          | P2    | [`db-unreachable.md`](../runbooks/db-unreachable.md), bei Release-Korrelation [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md) |
+| Neon-Verbindungen      | > 80 % des verfügbaren Limits, hohe CPU oder Speicher        | P2    | [`db-unreachable.md`](../runbooks/db-unreachable.md)                                                                                           |
+| Neon Auth              | deutlicher Anstieg bei Auth-Fehlern (401/5xx)                | P2    | [`auth-outage.md`](../runbooks/auth-outage.md)                                                                                                 |
+| Web Vitals             | LCP p75 > 2,5 s                                              | P3    | [`bad-release-rollback.md`](../runbooks/bad-release-rollback.md)                                                                               |
+| Cron `purge-leads`     | Job fehlgeschlagen oder erwartete Ausführung fehlt           | P3    | [`db-unreachable.md`](../runbooks/db-unreachable.md)                                                                                           |
+| Kosten                 | 80 % des freigegebenen Monatsbudgets                         | P3    | [`cost-budget.md`](../runbooks/cost-budget.md)                                                                                                 |
+| Secret-Ablauf/Rotation | Rotation überfällig oder Missbrauchsverdacht                 | P2    | [`secret-rotation.md`](../runbooks/secret-rotation.md)                                                                                         |
+| Restore-Test           | Quartalsfrist überschritten oder Restore nicht verifizierbar | P2    | [`restore-neon-branch.md`](../runbooks/restore-neon-branch.md)                                                                                 |
 
 Für jeden Alarm müssen im Anbieter-Dashboard Owner, Pager/Benachrichtigung,
 Runbook-Link, Testzeitpunkt und letzte Bestätigung hinterlegt werden. Alarm

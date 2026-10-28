@@ -67,15 +67,14 @@ test('vehicle configuration updates price and can be shared @smoke', async ({
   }
 })
 
-test(
-  'guest account access redirects to sign-in and preserves configuration @smoke',
-  async ({ page }) => {
-    await page.goto('/de-de/konto?model=aurelia&cfg=sample-code')
+test('guest account access redirects to sign-in and preserves configuration @smoke', async ({
+  page,
+}) => {
+  await page.goto('/de-de/konto?model=aurelia&cfg=sample-code')
 
-    await expect(page).toHaveURL(/\/auth\/sign-in\?returnTo=/)
-    await expect(page.getByText(/cfg=sample-code/)).toBeVisible()
-  },
-)
+  await expect(page).toHaveURL(/\/auth\/sign-in\?returnTo=/)
+  await expect(page.getByText(/cfg=sample-code/)).toBeVisible()
+})
 
 test('dealer search and test-drive lead include validation and success paths @smoke', async ({
   page,

@@ -8,6 +8,13 @@
       "when": 1793207877827,
       "tag": "0000_add_showroom_persistence",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793209509654,
+      "tag": "0001_retain_deletion_guard",
+      "breakpoints": true
     }
   ]
 }

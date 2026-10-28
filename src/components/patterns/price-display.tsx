@@ -28,10 +28,10 @@ export function PriceDisplay({
 }: PriceDisplayProps) {
   return (
     <p
-      className={cn('flex items-baseline gap-2 text-text', className)}
+      className={cn('text-text flex items-baseline gap-2', className)}
       {...(live ? { 'aria-live': 'polite' as const, 'aria-atomic': true } : {})}
     >
-      {prefix ? <span className="text-sm text-text-muted">{prefix}</span> : null}
+      {prefix ? <span className="text-text-muted text-sm">{prefix}</span> : null}
       <strong className={cn('font-semibold tabular-nums', SIZE_CLASSES[size])}>
         {formatPrice(amountCents, locale, currency)}
       </strong>

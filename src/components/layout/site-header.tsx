@@ -56,15 +56,15 @@ export function SiteHeader({
           if (!event.currentTarget.contains(event.relatedTarget)) setFocusInside(false)
         }}
         className={cn(
-          'fixed inset-x-0 top-0 z-(--z-header) h-header-sm lg:h-header',
-          'transition-transform duration-(--motion-base) ease-standard',
+          'h-header-sm lg:h-header fixed inset-x-0 top-0 z-(--z-header)',
+          'ease-standard transition-transform duration-(--motion-base)',
           isHidden ? '-translate-y-full' : 'translate-y-0',
-          isTransparent ? 'text-on-media' : 'border-b border-border bg-bg text-text',
+          isTransparent ? 'text-on-media' : 'border-border bg-bg text-text border-b',
         )}
       >
         {isTransparent ? <div aria-hidden="true" className="header-scrim" /> : null}
         <div className="layout-container flex h-full items-center gap-4">
-          <NextLink href={`/${locale}`} className="inline-flex min-h-touch items-center">
+          <NextLink href={`/${locale}`} className="min-h-touch inline-flex items-center">
             <Logo label={labels.homeLink} className="h-6 lg:h-8" />
           </NextLink>
           <div className="hidden h-full flex-1 justify-center lg:flex">
@@ -77,7 +77,13 @@ export function SiteHeader({
           </div>
           <div className="ms-auto flex items-center gap-1 lg:ms-0">
             {onSearch ? (
-              <Button variant="ghost" size="icon" aria-label={labels.search} onClick={onSearch} className={iconClasses}>
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label={labels.search}
+                onClick={onSearch}
+                className={iconClasses}
+              >
                 <Icon name="search" />
               </Button>
             ) : (
@@ -87,7 +93,11 @@ export function SiteHeader({
                 </NextLink>
               </Button>
             )}
-            <LocaleSwitch locale={locale} label={labels.language} className="hidden lg:inline-flex" />
+            <LocaleSwitch
+              locale={locale}
+              label={labels.language}
+              className="hidden lg:inline-flex"
+            />
             {accountSlot ? <div className="hidden lg:block">{accountSlot}</div> : null}
             <div className="lg:hidden">
               <MobileNavDrawer
